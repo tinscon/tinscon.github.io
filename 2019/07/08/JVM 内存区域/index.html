@@ -8,25 +8,25 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>TINSCON</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。   程序计数器（Program Counter Register） 程序计数器是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里（不通的虚拟机可能会通过一些高效的方式去实现），字节码解释器工作">
+  <meta name="description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。">
 <meta name="keywords" content="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="TINSCON">
 <meta property="og:url" content="http://yoursite.com/2019/07/08/JVM 内存区域/index.html">
 <meta property="og:site_name" content="TINSCON">
-<meta property="og:description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。   程序计数器（Program Counter Register） 程序计数器是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里（不通的虚拟机可能会通过一些高效的方式去实现），字节码解释器工作">
+<meta property="og:description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:image" content="http://yoursite.com/blog/source/img/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
-<meta property="og:updated_time" content="2019-07-11T15:42:34.721Z">
+<meta property="og:image" content="http://yoursite.com/img/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:updated_time" content="2019-07-11T16:33:38.293Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TINSCON">
-<meta name="twitter:description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。   程序计数器（Program Counter Register） 程序计数器是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里（不通的虚拟机可能会通过一些高效的方式去实现），字节码解释器工作">
-<meta name="twitter:image" content="http://yoursite.com/blog/source/img/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
+<meta name="twitter:description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。">
+<meta name="twitter:image" content="http://yoursite.com/img/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
   
     <link rel="alternative" href="/atom.xml" title="TINSCON" type="application/atom+xml">
   
   
-    <link rel="icon" href="/favicon.png">
+    <link rel="icon" href="/img/wechat.jpeg">
   
   <link rel="stylesheet" type="text/css" href="/./main.0cf68a.css">
   <style type="text/css">
@@ -50,7 +50,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/img/wechat.jpeg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">TINSCON</a></h1>
@@ -110,7 +110,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/img/wechat.jpeg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">TINSCON</h1>
@@ -169,7 +169,9 @@
         <h1 id="JVM-内存区域"><a href="#JVM-内存区域" class="headerlink" title="JVM 内存区域"></a>JVM 内存区域</h1><blockquote>
 <p>本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。</p>
 </blockquote>
-<p><img src="/blog/source/img/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="jvm内存模型"></p>
+<a id="more"></a> 
+
+<p><img src="/img/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="jvm内存模型"></p>
 <h1 id="程序计数器（Program-Counter-Register）"><a href="#程序计数器（Program-Counter-Register）" class="headerlink" title="程序计数器（Program Counter Register）"></a>程序计数器（Program Counter Register）</h1><ul>
 <li><p>程序计数器是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里（不通的虚拟机可能会通过一些高效的方式去实现），字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。在java多线程中，也是需要依靠它来实现线程切换后恢复到正确的执行位置。<font color="red">这部分数据是由线程独享的</font>。</p>
 </li>
@@ -252,9 +254,14 @@
             <span class="tooltip-content">
               <span class="tooltip-text">
                 <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>学习的道路孤单却不孤独<i class="icon icon-quo-right"></i></p>
                   <div class="reward-box">
                     
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wechat.jpeg">
+                      <span class="reward-type">微信</span>
+                    </div>
                     
                   </div>
                 </span>
@@ -460,11 +467,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Map</a>
+                <a href="javascript:void(0)" class="js-tag color1">FRIST</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">FRIST</a>
+                <a href="javascript:void(0)" class="js-tag color4">Map</a>
               </li>
             
             <div class="clearfix"></div>
@@ -516,27 +523,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
-            </li>
-          
-            <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+              <a href="http://www.tinscon.com" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
             </li>
           
         </ul>
@@ -547,7 +534,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">学习的道路孤单却不孤独</div>
   	  	
     	</section>
     
