@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="TINSCON">
 <meta property="og:description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:image" content="http://yoursite.com/img/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
-<meta property="og:updated_time" content="2019-07-12T05:38:25.989Z">
+<meta property="og:image" content="http://yoursite.com/img/jvm/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
+<meta property="og:updated_time" content="2019-07-14T12:54:41.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM内存区域">
 <meta name="twitter:description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。">
-<meta name="twitter:image" content="http://yoursite.com/img/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
+<meta name="twitter:image" content="http://yoursite.com/img/jvm/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
   
     <link rel="alternative" href="/atom.xml" title="TINSCON" type="application/atom+xml">
   
@@ -186,7 +186,7 @@
 </blockquote>
 <a id="more"></a> 
 
-<p><img src="/img/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="jvm内存模型"></p>
+<p><img src="/img/jvm/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="jvm内存模型"></p>
 <h1 id="程序计数器（Program-Counter-Register）"><a href="#程序计数器（Program-Counter-Register）" class="headerlink" title="程序计数器（Program Counter Register）"></a>程序计数器（Program Counter Register）</h1><ul>
 <li><p>程序计数器是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里（不通的虚拟机可能会通过一些高效的方式去实现），字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。在java多线程中，也是需要依靠它来实现线程切换后恢复到正确的执行位置。<font color="red">这部分数据是由线程独享的</font>。</p>
 </li>
