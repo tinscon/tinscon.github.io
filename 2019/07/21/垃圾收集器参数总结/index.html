@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>理解GC日志 | TINSCON</title>
+  <title>垃圾收集器参数总结 | TINSCON</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="理解GC日志在介绍完垃圾回收算法以及垃圾收集器后，我们再来介绍一下如何阅读GC日志。对于不同收集器的日志形式都是由他们自身的实现决定的，换而言之，每个收集器的日志格式都可以不一样。但虚拟机的设计者为了方便用户的阅读，将各个收集起的日志都维持在一定的共性。">
+  <meta name="description" content="垃圾收集器参数总结本文主要介绍一下垃圾收集器的常用参数，以及常见的组合方式。  垃圾收集器常见参数1234567-XX:+&amp;lt;option&amp;gt; 启用选项 -XX:-&amp;lt;option&amp;gt; 不启用选项 -XX: &amp;lt;option&amp;gt;=&amp;lt;number&amp;gt; -XX: &amp;lt;option&amp;gt;=&amp;lt;string&amp;gt;">
 <meta name="keywords" content="JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="理解GC日志">
-<meta property="og:url" content="http://yoursite.com/2019/07/16/理解GC日志/index.html">
+<meta property="og:title" content="垃圾收集器参数总结">
+<meta property="og:url" content="http://yoursite.com/2019/07/21/垃圾收集器参数总结/index.html">
 <meta property="og:site_name" content="TINSCON">
-<meta property="og:description" content="理解GC日志在介绍完垃圾回收算法以及垃圾收集器后，我们再来介绍一下如何阅读GC日志。对于不同收集器的日志形式都是由他们自身的实现决定的，换而言之，每个收集器的日志格式都可以不一样。但虚拟机的设计者为了方便用户的阅读，将各个收集起的日志都维持在一定的共性。">
+<meta property="og:description" content="垃圾收集器参数总结本文主要介绍一下垃圾收集器的常用参数，以及常见的组合方式。  垃圾收集器常见参数1234567-XX:+&amp;lt;option&amp;gt; 启用选项 -XX:-&amp;lt;option&amp;gt; 不启用选项 -XX: &amp;lt;option&amp;gt;=&amp;lt;number&amp;gt; -XX: &amp;lt;option&amp;gt;=&amp;lt;string&amp;gt;">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:updated_time" content="2019-07-16T15:52:34.039Z">
+<meta property="og:updated_time" content="2019-07-21T06:38:06.236Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="理解GC日志">
-<meta name="twitter:description" content="理解GC日志在介绍完垃圾回收算法以及垃圾收集器后，我们再来介绍一下如何阅读GC日志。对于不同收集器的日志形式都是由他们自身的实现决定的，换而言之，每个收集器的日志格式都可以不一样。但虚拟机的设计者为了方便用户的阅读，将各个收集起的日志都维持在一定的共性。">
+<meta name="twitter:title" content="垃圾收集器参数总结">
+<meta name="twitter:description" content="垃圾收集器参数总结本文主要介绍一下垃圾收集器的常用参数，以及常见的组合方式。  垃圾收集器常见参数1234567-XX:+&amp;lt;option&amp;gt; 启用选项 -XX:-&amp;lt;option&amp;gt; 不启用选项 -XX: &amp;lt;option&amp;gt;=&amp;lt;number&amp;gt; -XX: &amp;lt;option&amp;gt;=&amp;lt;string&amp;gt;">
   
     <link rel="alternative" href="/atom.xml" title="TINSCON" type="application/atom+xml">
   
@@ -159,58 +159,171 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-理解GC日志" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-垃圾收集器参数总结" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      理解GC日志
+      垃圾收集器参数总结
     </h1>
   
 
         
-        <a href="/2019/07/16/理解GC日志/" class="archive-article-date">
-  	<time datetime="2019-07-16T14:53:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
+        <a href="/2019/07/21/垃圾收集器参数总结/" class="archive-article-date">
+  	<time datetime="2019-07-21T05:34:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="理解GC日志"><a href="#理解GC日志" class="headerlink" title="理解GC日志"></a>理解GC日志</h1><p>在介绍完垃圾回收算法以及垃圾收集器后，我们再来介绍一下如何阅读GC日志。对于不同收集器的日志形式都是由他们自身的实现决定的，换而言之，每个收集器的日志格式都可以不一样。但虚拟机的设计者为了方便用户的阅读，将各个收集起的日志都维持在一定的共性。 </p>
+        <h1 id="垃圾收集器参数总结"><a href="#垃圾收集器参数总结" class="headerlink" title="垃圾收集器参数总结"></a>垃圾收集器参数总结</h1><p>本文主要介绍一下垃圾收集器的常用参数，以及常见的组合方式。 </p>
+<h2 id="垃圾收集器常见参数"><a href="#垃圾收集器常见参数" class="headerlink" title="垃圾收集器常见参数"></a>垃圾收集器常见参数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-XX:+&lt;option&gt; 启用选项 </span><br><span class="line"></span><br><span class="line">-XX:-&lt;option&gt; 不启用选项 </span><br><span class="line"></span><br><span class="line">-XX: &lt;option&gt;=&lt;number&gt; </span><br><span class="line"></span><br><span class="line">-XX: &lt;option&gt;=&lt;string&gt;</span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 
-<h2 id="基本参数及结果"><a href="#基本参数及结果" class="headerlink" title="基本参数及结果"></a>基本参数及结果</h2><h3 id="XX-PrintGC"><a href="#XX-PrintGC" class="headerlink" title="-XX:+PrintGC"></a>-XX:+PrintGC</h3><p>参数-XX:+PrintGC（或者-verbose:gc）开启了简单GC日志模式，为每一次新生代（young generation）的GC和每一次的Full GC打印一行信息。下面举例说明： </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[GC (System.gc()) <span class="number">9340</span>K-&gt;<span class="number">712</span>K(<span class="number">251392</span>K), <span class="number">0.0010356</span> secs] </span><br><span class="line"></span><br><span class="line">[<span class="function">Full <span class="title">GC</span> <span class="params">(System.gc()</span>) 712K-&gt;455<span class="title">K</span><span class="params">(<span class="number">251392</span>K)</span>, 0.0037919 secs]</span></span><br></pre></td></tr></table></figure>
 
-<p>每行开始首先是GC的类型（可以是“GC”或者“Full GC”），然后是在GC之前和GC之后已使用的堆空间，再然后是当前的堆容量，最后是GC持续的时间（以秒计）。 </p>
-<p>第一行的意思就是GC将已使用的堆空间从9340K减少到712K，当前的堆容量（译者注：GC发生时）是251392K，GC持续的时间是0.0010356秒。 </p>
-<p>简单模式的GC日志格式是与GC算法无关的，日志也没有提供太多的信息。在上面的例子中，我们甚至无法从日志中判断是否GC将一些对象从young generation移到了old generation。所以详细模式的GC日志更有用一些。 </p>
-<h3 id="XX-PrintGCDetails-输出GC的详细日志"><a href="#XX-PrintGCDetails-输出GC的详细日志" class="headerlink" title="-XX:+PrintGCDetails 输出GC的详细日志"></a>-XX:+PrintGCDetails 输出GC的详细日志</h3><p>如果不是使用-XX:+PrintGC，而是-XX:PrintGCDetails，就开启了详细GC日志模式。在这种模式下，日志格式和所使用的GC算法有关。我们首先看一下使用Throughput垃圾收集器在young generation中生成的日志。为了便于阅读这里将一行日志分为多行并使用缩进。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[GC </span><br><span class="line"></span><br><span class="line">[PSYoungGen: <span class="number">142816</span>K-&gt;<span class="number">10752</span>K(<span class="number">142848</span>K)] <span class="number">246648</span>K-&gt;<span class="number">243136</span>K(<span class="number">375296</span>K), <span class="number">0.0935090</span> secs </span><br><span class="line"></span><br><span class="line">] </span><br><span class="line"></span><br><span class="line">[Times: user=<span class="number">0.55</span> sys=<span class="number">0.10</span>, real=<span class="number">0.09</span> secs]</span><br></pre></td></tr></table></figure>
 
-<p>我们可以很容易发现：这是一次在young generation中的GC，它将已使用的堆空间从246648K减少到了243136K，用时0.0935090秒。此外我们还可以得到更多的信息：所使用的垃圾收集器（即PSYoungGen）、young generation的大小和使用情况（在这个例子中“PSYoungGen”垃圾收集器将young generation所使用的堆空间从142816K减少到10752K）。 </p>
-<p>既然我们已经知道了young generation的大小，所以很容易判定发生了GC，因为young generation无法分配更多的对象空间：已经使用了142848K中的142816K。我们可以进一步得出结论，多数从young generation移除的对象仍然在堆空间中，只是被移到了old generation：通过对比绿色数据可以发现即使young generation几乎被完全清空（从142816K减少到10752K），但是所占用的堆空间仍然基本相同（从246648K到243136K）。 </p>
-<p>详细日志的“Times”部分包含了GC所使用的CPU时间信息，分别为操作系统的用户空间和系统空间所使用的时间。同时，它显示了GC运行的“真实”时间（0.09秒是0.0929090秒的近似值）。如果CPU时间（译者注：0.55秒+0.10秒）明显多于”真实“时间（译者注：0.09秒），我们可以得出结论：GC使用了多线程运行。这样的话CPU时间就是所有GC线程所花费的CPU时间的总和。实际上我们的例子中的垃圾收集器使用了8个线程。 </p>
-<p>接下来看一下Full GC的输出日志 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[Full GC </span><br><span class="line"></span><br><span class="line">[PSYoungGen: <span class="number">10752</span>K-&gt;<span class="number">9707</span>K(<span class="number">142848</span>K)] </span><br><span class="line"></span><br><span class="line">[ParOldGen: <span class="number">232384</span>K-&gt;<span class="number">232244</span>K(<span class="number">485888</span>K)] <span class="number">243136</span>K-&gt;<span class="number">241951</span>K(<span class="number">628736</span>K) </span><br><span class="line"></span><br><span class="line">[PSPermGen: <span class="number">3162</span>K-&gt;<span class="number">3161</span>K(<span class="number">21504</span>K)], <span class="number">1.5265450</span> secs </span><br><span class="line"></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<p>除了关于young generation的详细信息，日志也提供了old generation和permanent generation的详细信息。对于这三个generations，一样也可以看到所使用的垃圾收集器、堆空间的大小、GC前后的堆使用情况。需要注意的是显示堆空间的大小等于young generation和old generation各自堆空间的和。以上面为例，堆空间总共占用了241951K，其中9707K在young generation，232244K在old generation。Full GC持续了大约1.53秒，用户空间的CPU执行时间为10.96秒，说明GC使用了多线程（和之前一样8个线程）。 </p>
-<p>对不同generation详细的日志可以让我们分析GC的原因，如果某个generation的日志显示在GC之前，堆空间几乎被占满，那么很有可能就是这个generation触发了GC。但是在上面的例子中，三个generation中的任何一个都不是这样的，在这种情况下是什么原因触发了GC呢。对于Throughput垃圾收集器，在某一个generation被过度使用之前，GC ergonomics（参考本系列第6节）决定要启动GC。 </p>
-<p>Full GC也可以通过显式的请求而触发，可以是通过应用程序，或者是一个外部的JVM接口。这样触发的GC可以很容易在日志里分辨出来，因为输出的日志是以“Full GC(System)”开头的，而不是“Full GC”。 </p>
-<p>对于Serial垃圾收集器，详细的GC日志和Throughput垃圾收集器是非常相似的。唯一的区别是不同的generation日志可能使用了不同的GC算法（例如：old generation的日志可能以Tenured开头，而不是ParOldGen）。使用垃圾收集器作为一行日志的开头可以方便我们从日志就判断出JVM的GC设置。 </p>
-<p>对于CMS垃圾收集器，young generation的详细日志也和Throughput垃圾收集器非常相似，但是old generation的日志却不是这样。对于CMS垃圾收集器，在old generation中的GC是在不同的时间片内与应用程序同时运行的。GC日志自然也和Full GC的日志不同。而且在不同时间片的日志夹杂着在此期间young generation的GC日志。但是了解了上面介绍的GC日志的基本元素，也不难理解在不同时间片内的日志。只是在解释GC运行时间时要特别注意，由于大多数时间片内的GC都是和应用程序同时运行的，所以和那种独占式的GC相比，GC的持续时间更长一些并不说明一定有问题。即使CMS垃圾收集器没有完成一个CMS周期，Full GC也可能会发生。如果发生了GC，在日志中会包含触发Full GC的原因，例如众所周知的”concurrent mode failure“。 </p>
-<h3 id="XX-PrintGCTimeStamps和-XX-PrintGCDateStamps"><a href="#XX-PrintGCTimeStamps和-XX-PrintGCDateStamps" class="headerlink" title="-XX:+PrintGCTimeStamps和-XX:+PrintGCDateStamps"></a>-XX:+PrintGCTimeStamps和-XX:+PrintGCDateStamps</h3><p>使用-XX:+PrintGCTimeStamps可以将时间和日期也加到GC日志中。表示自JVM启动至今的时间戳会被添加到每一行中。例子如下： </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0.185</span>: [GC <span class="number">66048</span>K-&gt;<span class="number">53077</span>K(<span class="number">251392</span>K), <span class="number">0.0977580</span> secs] </span><br><span class="line"></span><br><span class="line"><span class="number">0.323</span>: [GC <span class="number">119125</span>K-&gt;<span class="number">114661</span>K(<span class="number">317440</span>K), <span class="number">0.1448850</span> secs] </span><br><span class="line"></span><br><span class="line"><span class="number">0.603</span>: [GC <span class="number">246757</span>K-&gt;<span class="number">243133</span>K(<span class="number">375296</span>K), <span class="number">0.2860800</span> secs]</span><br></pre></td></tr></table></figure>
-
-<p>如果指定了-XX:+PrintGCDateStamps，每一行就添加上了绝对的日期和时间。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2014</span>-<span class="number">01</span>-<span class="number">03</span>T12:<span class="number">08</span>:<span class="number">38.102</span>-<span class="number">0100</span>: [GC <span class="number">66048</span>K-&gt;<span class="number">53077</span>K(<span class="number">251392</span>K), <span class="number">0.0959470</span> secs] </span><br><span class="line"></span><br><span class="line"><span class="number">2014</span>-<span class="number">01</span>-<span class="number">03</span>T12:<span class="number">08</span>:<span class="number">38.239</span>-<span class="number">0100</span>: [GC <span class="number">119125</span>K-&gt;<span class="number">114661</span>K(<span class="number">317440</span>K), <span class="number">0.1421720</span> secs] </span><br><span class="line"></span><br><span class="line"><span class="number">2014</span>-<span class="number">01</span>-<span class="number">03</span>T12:<span class="number">08</span>:<span class="number">38.513</span>-<span class="number">0100</span>: [GC <span class="number">246757</span>K-&gt;<span class="number">243133</span>K(<span class="number">375296</span>K), <span class="number">0.2761000</span> secs]</span><br></pre></td></tr></table></figure>
-
-<h3 id="Xloggc"><a href="#Xloggc" class="headerlink" title="-Xloggc"></a>-Xloggc</h3><p>缺省的GC日志时输出到终端的，使用-Xloggc:也可以输出到指定的文件。需要注意这个参数隐式的设置了参数-XX:+PrintGC和-XX:+PrintGCTimeStamps，但为了以防在新版本的JVM中有任何变化，我仍建议显示的设置这些参数。 </p>
-<h3 id="可管理的JVM参数"><a href="#可管理的JVM参数" class="headerlink" title="可管理的JVM参数"></a>可管理的JVM参数</h3><p>一个常常被讨论的问题是在生产环境中GC日志是否应该开启。因为它所产生的开销通常都非常有限，因此我的答案是需要开启。但并不一定在启动JVM时就必须指定GC日志参数。 </p>
-<p>HotSpot JVM有一类特别的参数叫做可管理的参数。对于这些参数，可以在运行时修改他们的值。我们这里所讨论的所有参数以及以“PrintGC”开头的参数都是可管理的参数。这样在任何时候我们都可以开启或是关闭GC日志。比如我们可以使用JDK自带的jinfo工具来设置这些参数，或者是通过JMX客户端调用HotSpotDiagnostic MXBean的setVMOption方法来设置这些参数。 </p>
+<table>
+<thead>
+<tr>
+<th align="center">描述</th>
+<th align="center">参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">UseSerialGC</td>
+<td align="center">Jvm运行在Client模式下的默认值，打开此开关后，使用Serial + Serial Old的收集器组合进行内存回收</td>
+</tr>
+<tr>
+<td align="center">UseParNewGC</td>
+<td align="center">打开此开关后，使用ParNew + Serial Old的收集器进行垃圾回收</td>
+</tr>
+<tr>
+<td align="center">UseConcMarkSweepGC</td>
+<td align="center">使用ParNew + CMS + Serial Old的收集器组合进行内存回收，Serial Old作为CMS出现“Concurrent Mode Failure”失败后的后备收集器使用。</td>
+</tr>
+<tr>
+<td align="center">UseParallelOldGC</td>
+<td align="center">使用Parallel Scavenge + Parallel Old的收集器组合进行回收</td>
+</tr>
+<tr>
+<td align="center">SurvivorRatio</td>
+<td align="center">新生代中Eden区域与Survivor区域的容量比值，默认为8，代表Eden:Subrvivor = 8:1</td>
+</tr>
+<tr>
+<td align="center">PretenureSizeThreshold</td>
+<td align="center">直接晋升到老年代对象的大小，设置这个参数后，大于这个参数的对象将直接在老年代分配</td>
+</tr>
+<tr>
+<td align="center">MaxTenuringThreshold</td>
+<td align="center">晋升到老年代的对象年龄，每次Minor GC之后，年龄就加1，当超过这个参数的值时进入老年代</td>
+</tr>
+<tr>
+<td align="center">UseAdaptiveSizePolicy</td>
+<td align="center">动态调整java堆中各个区域的大小以及进入老年代的年龄</td>
+</tr>
+<tr>
+<td align="center">HandlePromotionFailure</td>
+<td align="center">是否允许新生代收集担保，进行一次minor gc后, 另一块Survivor空间不足时，将直接会在老年代中保留</td>
+</tr>
+<tr>
+<td align="center">ParallelGCThreads</td>
+<td align="center">设置并行GC进行内存回收的线程数</td>
+</tr>
+<tr>
+<td align="center">GCTimeRatio</td>
+<td align="center">GC时间占总时间的比列，默认值为99，即允许1%的GC时间，仅在使用Parallel Scavenge 收集器时有效</td>
+</tr>
+<tr>
+<td align="center">MaxGCPauseMillis</td>
+<td align="center">设置GC的最大停顿时间，在Parallel Scavenge 收集器下有效</td>
+</tr>
+<tr>
+<td align="center">CMSInitiatingOccupancyFraction</td>
+<td align="center">设置CMS收集器在老年代空间被使用多少后出发垃圾收集，默认值为68%，仅在CMS收集器时有效，-XX:CMSInitiatingOccupancyFraction=70</td>
+</tr>
+<tr>
+<td align="center">UseCMSCompactAtFullCollection</td>
+<td align="center">设置CMS收集器在进行若干次垃圾收集后再进行一次内存碎片整理过程，通常与UseCMSCompactAtFullCollection参数一起使用</td>
+</tr>
+<tr>
+<td align="center">UseFastAccessorMethods</td>
+<td align="center">原始类型优化</td>
+</tr>
+<tr>
+<td align="center">DisableExplicitGC</td>
+<td align="center">是否关闭手动System.gc</td>
+</tr>
+<tr>
+<td align="center">CMSParallelRemarkEnabled</td>
+<td align="center">降低标记停顿</td>
+</tr>
+<tr>
+<td align="center">LargePageSizeInBytes</td>
+<td align="center">内存页的大小不可设置过大，会影响Perm的大小，-   XX:LargePageSizeInBytes=128m</td>
+</tr>
+</tbody></table>
+<h2 id="Client、Server默认GC"><a href="#Client、Server默认GC" class="headerlink" title="Client、Server默认GC"></a>Client、Server默认GC</h2><table>
+<thead>
+<tr>
+<th align="center">模式</th>
+<th align="center">新生代GC</th>
+<th align="center">老年代和持久代GC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Client</td>
+<td align="center">Serial串行GC</td>
+<td align="center">Serial Old 串行GC</td>
+</tr>
+<tr>
+<td align="center">Server</td>
+<td align="center">Parallel Scavenge 并行回收GC</td>
+<td align="center">Parallel Old 并行GC</td>
+</tr>
+</tbody></table>
+<h2 id="组合方式"><a href="#组合方式" class="headerlink" title="组合方式"></a>组合方式</h2><table>
+<thead>
+<tr>
+<th align="center">-</th>
+<th align="center">新生代GC方式</th>
+<th align="center">老年代和持久代GC方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">-XX:+UseSerialGC</td>
+<td align="center">Serial 串行GC</td>
+<td align="center">Serial Old 串行GC</td>
+</tr>
+<tr>
+<td align="center">-XX:+UseParallelGC</td>
+<td align="center">Parallel Scavenge 并行回收GC</td>
+<td align="center">Serial Old 并行GC</td>
+</tr>
+<tr>
+<td align="center">-XX:+UseConcMarkSweepGC</td>
+<td align="center">ParNew 并行GC</td>
+<td align="center">CMS 并发GC 当出现“Concurrent Mode Failure”时采用Serial Old 串行GC</td>
+</tr>
+<tr>
+<td align="center">-XX:+UseParNewGC</td>
+<td align="center">ParNew 并行GC</td>
+<td align="center">Serial Old 串行GC</td>
+</tr>
+<tr>
+<td align="center">-XX:+UseParallelOldGC</td>
+<td align="center">Parallel Scavenge 并行回收GC</td>
+<td align="center">Parallel Old 并行GC</td>
+</tr>
+<tr>
+<td align="center">-XX:+UseConcMarkSweepGC -XX:+UseParNewGC</td>
+<td align="center">Serial 串行GC</td>
+<td align="center">CMS 并发GC 当出现“Concurrent Mode Failure”时采用Serial Old 串行GC</td>
+</tr>
+</tbody></table>
 
       
 
@@ -306,7 +419,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/16/理解GC日志/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/07/21/垃圾收集器参数总结/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -320,18 +433,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/07/21/垃圾收集器参数总结/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          垃圾收集器参数总结
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/07/15/JVM垃圾收集器/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM垃圾收集器（HotSpot）</div>
+    <a href="/2019/07/16/理解GC日志/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">理解GC日志</div>
       <i class="icon-circle-right"></i>
     </a>
   
