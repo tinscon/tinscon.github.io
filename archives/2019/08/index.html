@@ -6,22 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>JVM内存区域 | TINSCON</title>
+  <title>Archives: 2019/8 | TINSCON</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。">
-<meta name="keywords" content="JVM">
-<meta property="og:type" content="article">
-<meta property="og:title" content="JVM内存区域">
-<meta property="og:url" content="http://yoursite.com/2019/04/10/JVM 内存区域/index.html">
+  <meta name="description" content="未来可期">
+<meta name="keywords" content="keywords">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TINSCON">
+<meta property="og:url" content="http://yoursite.com/archives/2019/08/index.html">
 <meta property="og:site_name" content="TINSCON">
-<meta property="og:description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。">
+<meta property="og:description" content="未来可期">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:image" content="http://yoursite.com/img/jvm/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
-<meta property="og:updated_time" content="2019-07-14T12:54:41.035Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JVM内存区域">
-<meta name="twitter:description" content="JVM 内存区域 本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。">
-<meta name="twitter:image" content="http://yoursite.com/img/jvm/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png">
+<meta name="twitter:title" content="TINSCON">
+<meta name="twitter:description" content="未来可期">
   
     <link rel="alternative" href="/atom.xml" title="TINSCON" type="application/atom+xml">
   
@@ -161,255 +158,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JVM 内存区域" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      JVM内存区域
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2019/08/05/JAVA 8 Stream 基础篇 /" class="archive-article-date">
+  	<time datetime="2019-08-05T14:27:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/08/05/JAVA 8 Stream 基础篇 /">JAVA 8 Stream 基础篇</a>
     </h1>
   
 
-        
-        <a href="/2019/04/10/JVM 内存区域/" class="archive-article-date">
-  	<time datetime="2019-04-10T05:31:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-04-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="JVM-内存区域"><a href="#JVM-内存区域" class="headerlink" title="JVM 内存区域"></a>JVM 内存区域</h1><blockquote>
-<p>本文主要介绍Java虚拟机内存的各个区域，讲解这些区域的作用、服务对象以及其中可能产生的问题。本文主要介绍虚拟机内运行时数据区的划分以及详细的概念。</p>
-</blockquote>
-<a id="more"></a> 
-
-<p><img src="/img/jvm/jvm%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B.png" alt="jvm内存模型"></p>
-<h1 id="程序计数器（Program-Counter-Register）"><a href="#程序计数器（Program-Counter-Register）" class="headerlink" title="程序计数器（Program Counter Register）"></a>程序计数器（Program Counter Register）</h1><ul>
-<li><p>程序计数器是一块较小的内存空间，它可以看作是当前线程所执行的字节码的行号指示器。在虚拟机的概念模型里（不通的虚拟机可能会通过一些高效的方式去实现），字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、跳转、异常处理、线程恢复等基础功能都需要依赖这个计数器来完成。在java多线程中，也是需要依靠它来实现线程切换后恢复到正确的执行位置。<font color="red">这部分数据是由线程独享的</font>。</p>
-</li>
-<li><p>如果线程正在执行的是一个Java方法，计数器内记录的是正在执行的虚拟机字节码的指令地址；如果正在执行的是一个Native方法，这个计数器则为空（<font color="red">Undefined</font>）。<font color="red">此内存区域是唯一一个在java虚拟机规范中没有规定任何OutOfMemoryError情况的区域</font>。</p>
-</li>
-</ul>
-<h2 id="Java虚拟机栈（Java-Virtual-Machine-Stacks）"><a href="#Java虚拟机栈（Java-Virtual-Machine-Stacks）" class="headerlink" title="Java虚拟机栈（Java Virtual Machine Stacks）"></a>Java虚拟机栈（Java Virtual Machine Stacks）</h2><ul>
-<li><p>与程序计数器一样，它也是线程私有的，其生命周期与线程相同。虚拟机栈描述的是Java方法执行的内存模型：每个方法每个方法在执行的同时都会创建一个栈帧用于存储局部变量、操作数栈、动态链接、方法的出口信息。每个方法从调用直至执行完成的过程，就对应着一个栈帧在虚拟机栈中入栈到出栈的过程。</p>
-</li>
-<li><p>我们常说的堆内存和栈内存中的栈内存，指的就是虚拟机栈中的局部变量表。存放编译期可知的各种基本数据类型（8种）、对象引用类型（reference型）和returnAddress类型（指向一条字节码指令的地址：函数返回地址）。long、double占用两个局部变量空间Slot，其余的占一个Slot。<font color="red">局部变量表所需的内存空间在编译期确定，当进入一个方法时，方法在栈帧中所需要分配的局部变量控件是完全确定的，不可动态改变大小</font>。</p>
-</li>
-<li><p>如果线程请求的栈深度大于虚拟机所允许的深度，将抛出StackOverflowError异常；如果虚拟机栈可动态扩展，在扩展时无法申请到足够的内存，将会抛出OutOfMemeryError异常。</p>
-</li>
-</ul>
-<h2 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h2><ul>
-<li>本地方法栈为JVM提供Native方法服务。</li>
-<li>本地方法：当某个线程调用一个本地方法时，便不再受虚拟机的限制。本地方法可以通过本地方法接口来访问虚拟机的运行时数据区。任何本地方法接口都会使用某种本地方法栈。当线程调用Java方法时，虚拟机会创建一个新的栈帧并压入Java栈。然而当它调用的是本地方法时，虚拟机会保持Java栈不变，不再在线程的Java栈中压入新的帧，虚拟机只是简单地动态连接并直接调用指定的本地方法。</li>
-<li>本地方法接口需要回调Java虚拟机中的Java方法时，该线程会保存本地方法栈的状态并进入到另一个Java栈。HotSpot虚拟机中把本地方法栈和虚拟机栈合二为一。本地方法栈也会抛出StackOverflowError异常和OutOfMemeryError异常。</li>
-</ul>
-<h2 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h2><ul>
-<li><p>JVM中所管理内存中的最大的一块。在虚拟机启动时被创建。唯一的目的是存放对象实例，几乎所有的对象实例和数组都是在这里分配内存。（JVM规范中说的是所有的，但是随着JIT便编译器的发展和逃逸技术分析的成熟，一些实例可以不在这个区域分配内存）</p>
-</li>
-<li><p>堆是垃圾收集管理的主要区域，所以也会被称为”GC堆“。细致一点可以分成新生代和老年代，再细致一点可以分成Eden空间、From Survivor 空间、To Surivivor。</p>
-</li>
-<li><p>浅堆和深堆 </p>
-<ul>
-<li><p>浅堆（Shallow Heap）和深堆（Retained Heap）是两个非常重要的概念，它们分别表示一个对象结构所占用的内存大小和一个对象被GC回收后，可以真实释放的内存大小。</p>
-</li>
-<li><p>浅堆（Shallow Heap）是指一个对象所消耗的内存。在32位系统中，一个对象引用会占据4个字节，一个int类型会占据4个字节，long型变量会占据8个字节，每个对象需要占用8个字节。</p>
-</li>
-<li><p>深堆（Retained Heap）的概念略微复杂。要理解深堆，首先需要了解保留集（Retained Set）。对象A的保留集指当对象A被垃圾回收后，可以被释放的所有对象集合（包括对象A本身），即对象A的保留集可以被认为是只能通过对象A被直接或间接访问到的所有对象的集合。通俗地说，就是指仅被对象A所持有的对象的集合。深堆是指对象的保留集中所有的对象的浅堆大小之和。<br>例如:对象A引用了C和D，对象B引用了C和E。那么对象A的浅堆大小只是A本身，不含C和D，而A的实际大小为A、C、D三者之和。而A的深堆大小为A与D之和，由于对象C还可以通过对象B访问到，因此不在对象A的深堆范围内。</p>
-</li>
-</ul>
-</li>
-</ul>
-<h2 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h2><ul>
-<li><p>方法区（method area）只是JVM规范中定义的一个概念，用于存储类信息、常量池、静态变量、JIT编译后的代码等数据，具体放在哪里，不同的实现可以放在不同的地方。永久代是HotSpot虚拟机特有的概念，是对方法区的实现，别的JVM没有永久代的概念。（虽然去除了永久代，但是方法区作为概念上的区域仍然存在） </p>
-</li>
-<li><p>在JDK8中，JDK8的HotSpot VM已经是以前的HotSpot VM与JRockit VM的合并版，也就是传说中的“HotRockit”，只是产品里名字还是叫HotSpot VM。所以对于说JDK8去除永久代换成元空间的说法，就是默指的合并后的HotSpot虚拟机。 </p>
-</li>
-<li><p>为什么要将永久代去除呢？<br>一方面是节省空间，避免了常见的永久内存错误：java.lang.OutOfMemoryError: PermGen问题。另一方面是为了整合JRockit，因为JRockit没有永代区这样类似的空间。<br>其实，从jdk7开始，就开始了永久代的转移工作，将譬如符号引用(Symbols)转移到了native heap；字面量(interned strings)转移到了java heap；等。但是直到JDK8永久代才被元空间替代。 </p>
-</li>
-<li><p>元空间又是什么呢？以前存储在永久代里面的数据现在存在了哪里？<br>元空间是一块与堆不相连的本地内存。原本存在永久代的数据，一部分移到了java堆里面，一部分移到了本地内存里面（即元空间）（文档中原句：Move part of the contents of the permanent generation in Hotspot to the Java heap and the remainder to native memory.） 。永久代中原来存储的字符串常量（池）、符号引用（这两个在jdk7普遍就已经将其放在堆上了）和类的静态变量现在存储在java堆中，其余的数据作为元数据存储在元空间中。 </p>
-</li>
-<li><p>什么是元数据呢？ </p>
-<p>元数据是数据的数据或者叫做用来描述数据的数据或者叫做信息的信息。（比如原本方法区存储的类信息、即时编译器编译后的代码等），也可以把元数据简单的理解成，最小的数据单位。元数据可以为数据说明其元素或属性（名称、大小、数据类型、等），或其结构（长度、字段、数据列），或其相关数据（位于何处、如何联系、拥有者）。 </p>
-</li>
-<li><p>JDK7及之前版本的方法区（Method Area）和Java堆一样，是各个线程共享的内存区域，用于存储已经被虚拟机加载的类信息、常量、静态常量、即时编译器编译后的代码等数据。<br>虽然Java虚拟机规范把方法区描述为堆的一个逻辑部分，但它有另外一个名字叫Non-Heap（非堆）。</p>
-</li>
-<li><p>两个子区域： </p>
-<ul>
-<li>持久代： 这个区域会存储包括类定义、结构、字段、方法（数据及代码）以及常量在内的类相关数据。它可以通过-XX:PermSize及-XX:MaxPermSize来进行调节。如果它的空间用完了，会导致java.lang.OutOfMemoryError: PermGenspace的异常。而JDK8开始，持久代已经被彻底删除了，取代它的是另一个内存区域也被称为元空间。</li>
-<li>存放数据区域：方法区存储的是每个class的信息，类加载器引用(classLoader)、运行时常量池（所有常量、字段引用、方法引用、属性）、每个方法的名字、类型(如类的全路径名、类型或接口) 、修饰符（如public、abstract、final）、属性、每个方法的名字、返回类型、参数类型(按顺序)、修饰符、属性、方法代码。</li>
-<li>方法区也可被垃圾收集，例如：在HotSpot中将GC分代收集扩展至方法区。避免了还要再为方法区编写GC算法。</li>
-</ul>
-</li>
-</ul>
-<h2 id="运行时常量池（Runtime-Constant-Pool"><a href="#运行时常量池（Runtime-Constant-Pool" class="headerlink" title="运行时常量池（Runtime Constant Pool)"></a>运行时常量池（Runtime Constant Pool)</h2><ul>
-<li><p>运行时常量池（Runtime Constant Pool)是方法区的一部分。Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池（Constant Pool Table)，用于存放编译期生成的各种字面量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。</p>
-</li>
-<li><p>Java虚拟机对Class文件每一部分（自然也包括常量池）的格式都有严格规定，每一个字节用于存储哪种数据都必须符合规范上的要求才会被虚拟机认可、装载和执行，但对于运行时常量池，Java虚拟机规范没有做任何细节的要求，不同的提供商实现的虚拟机可以按照白己的需要来实现这个内存区域。不过，一般来说，除了保存Class文件中描述的符号引用外，还会把翻译出来的直接引用也存储在运行时常量池中。</p>
-</li>
-<li><p>运行时常量池相对于Class文件常员池的另外一个重要特征是具备动态性，Java语言并不要求常量一定只有编译期才能产生，也就是并非预置入Class文件中常量池的内容才能进人方法区运行时常量池，运行期间也可能将新的常量放入池中，这种特性被开发人员利用得比较多的便是String类的intern()方法。</p>
-</li>
-<li><p>既然运行时常量池是方法区的一部分，当然受到方法区内存的限制，当常量池无法再申请到内存时会抛出OutOfMemoryError异常。</p>
-</li>
-<li><p>关于运行时常量池还有一个很有意思的例子。本文不再赘述，附上链接。<a href="https://blog.csdn.net/hollis_chuang/article/details/80810586" title="very nice" target="_blank" rel="noopener">Very Nice</a></p>
-</li>
-</ul>
-
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>学习的道路孤单却不孤独<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                    <div class="reward-box-item">
-                      <img class="reward-img" src="/img/wechat.jpeg">
-                      <span class="reward-type">微信</span>
-                    </div>
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Stream</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/04/10/JVM 内存区域/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2019/07/07/JVM 对象创建 /" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          JVM 对象创建
-        
-      </div>
-    </a>
   
   
-    <a href="/2019/04/10/LinkedHashMap-详解/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">LinkedHashMap 详解</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -432,8 +234,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
-		isArchive: false,
+		isPost: false,
+		isArchive: true,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
