@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | TINSCON</title>
+  <title>JAVA 8 Stream 基础篇之distinct() | TINSCON</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="未来可期">
-<meta name="keywords" content="keywords">
-<meta property="og:type" content="website">
-<meta property="og:title" content="TINSCON">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="JAVA 8 Stream 基础篇之distinct()基础篇提到要对对象实现 distinct() 的功能，本文就来介绍一下如何实现这个功能。要实现这个功能就需要知道   distinct() 的工作原理。distinct() 是根据 hashCode() 和 equals() 来进行去重的，所以我们首先就要重写该类的这两个方法。">
+<meta name="keywords" content="Stream">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA 8 Stream 基础篇之distinct()">
+<meta property="og:url" content="http://yoursite.com/2019/08/06/StreamDistinct/index.html">
 <meta property="og:site_name" content="TINSCON">
-<meta property="og:description" content="未来可期">
+<meta property="og:description" content="JAVA 8 Stream 基础篇之distinct()基础篇提到要对对象实现 distinct() 的功能，本文就来介绍一下如何实现这个功能。要实现这个功能就需要知道   distinct() 的工作原理。distinct() 是根据 hashCode() 和 equals() 来进行去重的，所以我们首先就要重写该类的这两个方法。">
 <meta property="og:locale" content="zh-hans">
+<meta property="og:updated_time" content="2019-08-06T05:48:37.956Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TINSCON">
-<meta name="twitter:description" content="未来可期">
+<meta name="twitter:title" content="JAVA 8 Stream 基础篇之distinct()">
+<meta name="twitter:description" content="JAVA 8 Stream 基础篇之distinct()基础篇提到要对对象实现 distinct() 的功能，本文就来介绍一下如何实现这个功能。要实现这个功能就需要知道   distinct() 的工作原理。distinct() 是根据 hashCode() 和 equals() 来进行去重的，所以我们首先就要重写该类的这两个方法。">
   
     <link rel="alternative" href="/atom.xml" title="TINSCON" type="application/atom+xml">
   
@@ -158,36 +159,71 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-StreamDistinct" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      JAVA 8 Stream 基础篇之distinct()
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/06/StreamDistinct/" class="archive-article-date">
+
+        
+        <a href="/2019/08/06/StreamDistinct/" class="archive-article-date">
   	<time datetime="2019-08-06T05:47:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/06/StreamDistinct/">JAVA 8 Stream 基础篇之distinct()</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JAVA-8-Stream-基础篇之distinct"><a href="#JAVA-8-Stream-基础篇之distinct" class="headerlink" title="JAVA 8 Stream 基础篇之distinct()"></a>JAVA 8 Stream 基础篇之distinct()</h1><p>基础篇提到要对对象实现 <code>distinct()</code> 的功能，本文就来介绍一下如何实现这个功能。要实现这个功能就需要知道   <code>distinct()</code> 的工作原理。<code>distinct()</code> 是根据 <code>hashCode()</code> 和 <code>equals()</code> 来进行去重的，所以我们首先就要重写该类的这两个方法。 </p>
+<a id="more"></a>
 
-        <div class="article-info info-on-right">
-          
+<h2 id="StreamTest"><a href="#StreamTest" class="headerlink" title="StreamTest"></a>StreamTest</h2><p>这里是我用来测试Stream效果的实体类，修改了一下，来完成我们本次的验证。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">\* <span class="doctag">@ClassName</span> Filter </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">\* <span class="doctag">@Description</span> TODO </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">\* <span class="doctag">@Author</span> dxk </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">\* <span class="doctag">@Date</span> 2019-08-05 12:00 </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">\* <span class="doctag">@Version</span> 1.0 </span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span> </span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span> </span><br><span class="line"></span><br><span class="line"><span class="meta">@Builder</span> </span><br><span class="line"></span><br><span class="line"><span class="meta">@NoArgsConstructor</span> </span><br><span class="line"></span><br><span class="line"><span class="meta">@AllArgsConstructor</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StreamTest</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Long id; </span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Byte deleted; </span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> String name ; </span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Integer age ; </span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">this</span> == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> StreamTest)) <span class="keyword">return</span> <span class="keyword">false</span>; </span><br><span class="line"></span><br><span class="line">StreamTest that = (StreamTest) o; </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (that == <span class="keyword">this</span>) <span class="keyword">return</span> <span class="keyword">true</span> ; </span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> id.equals(that.id) &amp;&amp; </span><br><span class="line"></span><br><span class="line">age.equals(that.age); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> result = <span class="number">17</span>; </span><br><span class="line"></span><br><span class="line">result = result * <span class="number">31</span> + (id == <span class="keyword">null</span>? <span class="number">0</span> : id.intValue()); </span><br><span class="line"></span><br><span class="line">result = result * <span class="number">31</span> + age; </span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> result; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">StreamTest filter1 = <span class="keyword">new</span> StreamTest(<span class="number">1L</span>,(<span class="keyword">byte</span>) <span class="number">1</span>,<span class="string">"aaa"</span>,<span class="number">25</span>); </span><br><span class="line"></span><br><span class="line">StreamTest filter2 = <span class="keyword">new</span> StreamTest(<span class="number">1L</span>,(<span class="keyword">byte</span>) <span class="number">1</span>,<span class="string">"bbb"</span>,<span class="number">25</span>); </span><br><span class="line"></span><br><span class="line">List&lt;StreamTest&gt; filters = Arrays.asList(filter1,filter2); </span><br><span class="line"></span><br><span class="line">filters.stream().distinct().forEach(x-&gt; System.out.println(JSON.toJSONString(x))); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出的结果： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;age&quot;:25,&quot;deleted&quot;:1,&quot;id&quot;:1,&quot;name&quot;:&quot;aaa&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个就是我们预料的一样，值得注意的是，重写的hashCode()与equals()方法不能用IDE直接生成的，要按照我们的需求来修改一下。 </p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>上面的例子已经是按照实体类的字段来去重，同理稍微简单一点的按照实体类来去重，只要再次修改hashCode()与equals()方法(包含所有字段即可)就能实现，那个是这个的简单版，这里就不再赘述了。 </p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>学习的道路孤单却不孤独<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wechat.jpeg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -199,364 +235,105 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/06/StreamDistinct/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/05/JAVA 8 Stream 基础篇 /" class="archive-article-date">
-  	<time datetime="2019-08-05T14:27:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/05/JAVA 8 Stream 基础篇 /" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JAVA 8 Stream 基础篇</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/05/JAVA 8 Stream 基础篇 /">JAVA 8 Stream 基础篇</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Stream</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/30/Mybatis 传递复杂实体类 /" class="archive-article-date">
-  	<time datetime="2019-07-30T05:13:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/30/Mybatis 传递复杂实体类 /">Mybatis 传递复杂实体类</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Mybatis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/28/MySQL索引的概念/" class="archive-article-date">
-  	<time datetime="2019-07-28T15:30:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/28/MySQL索引的概念/">MySQL索引总结</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/24/内存分配与回收策略/" class="archive-article-date">
-  	<time datetime="2019-07-24T15:15:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/24/内存分配与回收策略/">内存分配与回收策略</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/21/垃圾收集器参数总结/" class="archive-article-date">
-  	<time datetime="2019-07-21T05:34:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-21</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/21/垃圾收集器参数总结/">垃圾收集器参数总结</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/16/理解GC日志/" class="archive-article-date">
-  	<time datetime="2019-07-16T14:53:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-16</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/16/理解GC日志/">理解GC日志</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/15/JVM垃圾收集器/" class="archive-article-date">
-  	<time datetime="2019-07-15T14:45:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-15</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/15/JVM垃圾收集器/">JVM垃圾收集器（HotSpot）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/14/垃圾收集算法/" class="archive-article-date">
-  	<time datetime="2019-07-14T13:21:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/14/垃圾收集算法/">JVM垃圾收集算法</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/07/14/对象存活分析/" class="archive-article-date">
-  	<time datetime="2019-07-14T05:31:06.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-14</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/07/14/对象存活分析/">Java 对象存活分析</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
   
 
 
@@ -580,8 +357,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
