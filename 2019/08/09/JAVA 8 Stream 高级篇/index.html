@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>JAVA 8 Stream 基础篇 | TINSCON</title>
+  <title>JAVA 8 Stream 高级篇 | TINSCON</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="JAVA 8 Stream 基础篇 简介：Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。Stream API可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。这种风格将要处理的元素集合看作一种流， 流在管道中传输">
+  <meta name="description" content="JAVA 8 Stream 高级篇前文介绍了部分Stream常见接口方法，理解起来并不困难，但Stream的用法不止于此，本节我们将仍然以Stream为例，介绍高级用法。">
 <meta name="keywords" content="Stream">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JAVA 8 Stream 基础篇">
-<meta property="og:url" content="http://yoursite.com/2019/08/05/JAVA 8 Stream 基础篇 /index.html">
+<meta property="og:title" content="JAVA 8 Stream 高级篇">
+<meta property="og:url" content="http://yoursite.com/2019/08/09/JAVA 8 Stream 高级篇/index.html">
 <meta property="og:site_name" content="TINSCON">
-<meta property="og:description" content="JAVA 8 Stream 基础篇 简介：Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。Stream API可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。这种风格将要处理的元素集合看作一种流， 流在管道中传输">
+<meta property="og:description" content="JAVA 8 Stream 高级篇前文介绍了部分Stream常见接口方法，理解起来并不困难，但Stream的用法不止于此，本节我们将仍然以Stream为例，介绍高级用法。">
 <meta property="og:locale" content="zh-hans">
-<meta property="og:image" content="http://yoursite.com/img/stream/javaStream.png">
-<meta property="og:updated_time" content="2019-08-05T15:54:41.922Z">
+<meta property="og:updated_time" content="2019-08-08T16:05:55.895Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JAVA 8 Stream 基础篇">
-<meta name="twitter:description" content="JAVA 8 Stream 基础篇 简介：Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。Stream API可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。这种风格将要处理的元素集合看作一种流， 流在管道中传输">
-<meta name="twitter:image" content="http://yoursite.com/img/stream/javaStream.png">
+<meta name="twitter:title" content="JAVA 8 Stream 高级篇">
+<meta name="twitter:description" content="JAVA 8 Stream 高级篇前文介绍了部分Stream常见接口方法，理解起来并不困难，但Stream的用法不止于此，本节我们将仍然以Stream为例，介绍高级用法。">
   
     <link rel="alternative" href="/atom.xml" title="TINSCON" type="application/atom+xml">
   
@@ -161,110 +159,307 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JAVA 8 Stream 基础篇 " class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-JAVA 8 Stream 高级篇" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JAVA 8 Stream 基础篇
+      JAVA 8 Stream 高级篇
     </h1>
   
 
         
-        <a href="/2019/08/05/JAVA 8 Stream 基础篇 /" class="archive-article-date">
-  	<time datetime="2019-08-05T14:27:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-05</time>
+        <a href="/2019/08/09/JAVA 8 Stream 高级篇/" class="archive-article-date">
+  	<time datetime="2019-08-08T16:03:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="JAVA-8-Stream-基础篇"><a href="#JAVA-8-Stream-基础篇" class="headerlink" title="JAVA 8 Stream 基础篇"></a>JAVA 8 Stream 基础篇</h1><blockquote>
-<p>简介：Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。Stream API可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。这种风格将要处理的元素集合看作一种流， 流在管道中传输， 并且可以在管道的节点上进行处理， 比如筛选， 排序，聚合等。元素流在管道中经过中间操作（intermediate operation）的处理，最后由最终操作(terminal operation)得到前面处理的结果。 </p>
-</blockquote>
-<a id="more"></a>
+        <h1 id="JAVA-8-Stream-高级篇"><a href="#JAVA-8-Stream-高级篇" class="headerlink" title="JAVA 8 Stream 高级篇"></a>JAVA 8 Stream 高级篇</h1><p>前文介绍了部分Stream常见接口方法，理解起来并不困难，但Stream的用法不止于此，本节我们将仍然以Stream为例，介绍高级用法。 </p>
+<a id="more"></a> 
 
-<h2 id="Stream-与-Collection"><a href="#Stream-与-Collection" class="headerlink" title="Stream 与 Collection"></a>Stream 与 Collection</h2><p><strong>获取Stream</strong> </p>
-<ul>
-<li><p>调用 <code>Collection.stream()</code> 或者 <code>Collection.parallelStream()</code> 方法 </p>
+<h2 id="数值流"><a href="#数值流" class="headerlink" title="数值流"></a>数值流</h2><p>上文展示过Stream与三种数值流的关系图，这里就不再展示了。 </p>
+<p><code>int sum = list.stream().map(Person::getAge).reduce(0, Integer::sum)</code>; </p>
+<p>计算元素总和的方法其中暗含了装箱成本，<code>map(Person::getAge)</code> 方法过后流变成了 Stream。 针对这个问题 Java 8 有良心地引入了数值流 IntStream, DoubleStream, LongStream，这种流中的元素都是原始数据类型，分别是 int，double，long。 </p>
+<h3 id="流与数值流的转换"><a href="#流与数值流的转换" class="headerlink" title="流与数值流的转换"></a>流与数值流的转换</h3><h4 id="流转换为数值流"><a href="#流转换为数值流" class="headerlink" title="流转换为数值流"></a>流转换为数值流</h4><ul>
+<li><p>mapToInt(T -&gt; int) : return IntStream </p>
 </li>
-<li><p>调用 <code>Arrays.stream(T[] array)</code> 方法 </p>
+<li><p>mapToDouble(T -&gt; double) : return DoubleStream </p>
 </li>
-</ul>
-<p>常见的stream接口继承关系如图： </p>
-<p><img src="/img/stream/javaStream.png" alt> </p>
-<p>虽然大部分情况下<code>stream</code>是容器调用<code>Collection.stream()</code>方法得到的，但<code>stream</code>和<code>collections</code>有以下不同： </p>
-<ul>
-<li><p><strong>无存储</strong>。stream不是一种数据结构，它只是某种数据源的一个视图，数据源可以是一个数组，Java容器或I/O channel等。 </p>
-</li>
-<li><p><strong>为函数式编程而生</strong>。对stream的任何修改都不会修改背后的数据源，比如对stream执行过滤操作并不会删除被过滤的元素，而是会产生一个不包含被过滤元素的新stream。 </p>
-</li>
-<li><p><strong>惰式执行</strong>。stream上的操作并不会立即执行，只有等到用户真正需要结果的时候才会执行。 </p>
-</li>
-<li><p><strong>可消费性</strong>。stream只能被“消费”一次，一旦遍历过就会失效，就像容器的迭代器那样，想要再次遍历必须重新生成。 </p>
+<li><p>mapToLong(T -&gt; long) : return LongStream </p>
 </li>
 </ul>
-<p>对stream的操作分为为两类，<strong>中间操作(intermediate operations)</strong> 和<strong>结束操作(terminal operations)</strong>，二者特点是： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IntStream intStream = list.stream().mapToInt(Person::getAge);</span><br></pre></td></tr></table></figure>
+
+<p>当然如果是下面这样便会出错 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LongStream longStream = list.stream().mapToInt(Person::getAge);</span><br></pre></td></tr></table></figure>
+
+<p>因为 getAge 方法返回的是 int 类型（返回的如果是 Integer，一样可以转换为 IntStream） </p>
+<p>数值流转换为流 </p>
+<p>很简单，就一个 boxed </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;Integer&gt; stream = intStream.boxed();</span><br></pre></td></tr></table></figure>
+
+<h4 id="数值流方法"><a href="#数值流方法" class="headerlink" title="数值流方法"></a>数值流方法</h4><p>下面这些方法作用不用多说，看名字就知道： </p>
 <ul>
-<li><p>中间操作总是会惰式执行，调用中间操作只会生成一个标记了该操作的新stream，仅此而已。 </p>
+<li><p>sum() </p>
 </li>
-<li><p>结束操作会触发实际计算，计算发生时会把所有中间操作积攒的操作以pipeline的方式执行，这样可以减少迭代次数。计算完成之后stream就会失效。 </p>
+<li><p>max() </p>
+</li>
+<li><p>min() </p>
+</li>
+<li><p>average() 等… </p>
 </li>
 </ul>
-<p>下表汇总了 <code>Stream</code> 接口的部分常见方法： </p>
+<h4 id="数值范围"><a href="#数值范围" class="headerlink" title="数值范围"></a>数值范围</h4><p><code>IntStream</code> 与 <code>LongStream</code> 拥有<code>range</code> 和 <code>rangeClosed</code>  方法用于数值范围处理 </p>
+<ul>
+<li><p>IntStream ： rangeClosed(int, int) / range(int, int) </p>
+</li>
+<li><p>LongStream ： rangeClosed(long, long) / range(long, long) </p>
+</li>
+</ul>
+<p>这两个方法的区别在于一个是闭区间，一个是半开半闭区间： </p>
+<ul>
+<li><p>rangeClosed(1, 100) ：[1, 100] </p>
+</li>
+<li><p>range(1, 100) ：[1, 100) </p>
+</li>
+</ul>
+<p>我们可以利用 IntStream.rangeClosed(1, 100) 生成 1 到 100 的数值流 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//求 1 到 10 的数值总和： </span></span><br><span class="line"></span><br><span class="line">IntStream intStream = IntStream.rangeClosed(<span class="number">1</span>, <span class="number">10</span>); </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> sum = intStream.sum();</span><br></pre></td></tr></table></figure>
+
+<h2 id="Optional-类"><a href="#Optional-类" class="headerlink" title="Optional 类"></a>Optional 类</h2><p>NullPointerException 可以说是每一个 Java 程序员都非常讨厌看到的一个词，针对这个问题， Java 8 引入了一个新的容器类 Optional，可以代表一个值存在或不存在，这样就不用返回容易出问题的 null。之前文章的代码中就经常出现这个类，也是针对这个问题进行的改进。 </p>
+<p>Optional 类比较常用的几个方法有： </p>
+<ul>
+<li><p>isPresent() ：值存在时返回 true，反之 flase </p>
+</li>
+<li><p>get() ：返回当前值，若值不存在会抛出异常 </p>
+</li>
+<li><p>orElse(T) ：值存在时返回该值，否则返回 T 的值 </p>
+</li>
+</ul>
+<p>Optional 类还有三个特化版本 OptionalInt，OptionalLong，OptionalDouble，刚刚讲到的数值流中的 max 方法返回的类型便是这个。 </p>
+<p>Optional 类其中其实还有很多学问，讲解它说不定也要开一篇文章，这里先讲那么多，先知道基本怎么用就可以。 </p>
+<h2 id="构建流"><a href="#构建流" class="headerlink" title="构建流"></a>构建流</h2><h3 id="值创建流"><a href="#值创建流" class="headerlink" title="值创建流"></a>值创建流</h3><ul>
+<li>Stream.of(T…) ： Stream.of(“aa”, “bb”) 生成流 </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">生成一个字符串流 </span><br><span class="line"></span><br><span class="line">Stream&lt;String&gt; stream = Stream.of(<span class="string">"aaa"</span>, <span class="string">"bbb"</span>, <span class="string">"ccc"</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Stream.empty() : 生成空流 </li>
+</ul>
+<h3 id="数组创建流"><a href="#数组创建流" class="headerlink" title="数组创建流"></a>数组创建流</h3><p>根据参数的数组类型创建对应的流： </p>
+<ul>
+<li><p>Arrays.stream(T[ ]) </p>
+</li>
+<li><p>Arrays.stream(int[ ]) </p>
+</li>
+<li><p>Arrays.stream(double[ ]) </p>
+</li>
+<li><p>Arrays.stream(long[ ]) </p>
+</li>
+</ul>
+<p>值得注意的是，还可以规定只取数组的某部分，用到的是Arrays.stream(T[], int, int) </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//只取索引第 1 到第 2 位的： </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span>[] a = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>&#125;; </span><br><span class="line"></span><br><span class="line">Arrays.stream(a, <span class="number">1</span>, <span class="number">3</span>).forEach(System.out :: println); </span><br><span class="line"></span><br><span class="line"><span class="comment">//打印 2 ，3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="文件生成流"><a href="#文件生成流" class="headerlink" title="文件生成流"></a>文件生成流</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stream = Files.lines(Paths.get(<span class="string">"data.txt"</span>));</span><br></pre></td></tr></table></figure>
+
+<p>每个元素是给定文件的其中一行 </p>
+<h3 id="函数生成流"><a href="#函数生成流" class="headerlink" title="函数生成流"></a>函数生成流</h3><h4 id="Stream-generate"><a href="#Stream-generate" class="headerlink" title="Stream.generate"></a>Stream.generate</h4><p>通过实现 <code>Supplier</code>  接口，你可以自己来控制流的生成。这种情形通常用于随机数、常量的 Stream，或者需要前后元素间维持着某种状态信息的 Stream。把 Supplier 实例传递给 Stream.generate() 生成的 Stream，默认是串行（相对 parallel 而言）但无序的（相对 ordered 而言）。由于它是无限的，在管道中，必须利用 limit 之类的操作限制 Stream 大小。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成 10 个随机整数 </span></span><br><span class="line"></span><br><span class="line">Random seed = <span class="keyword">new</span> Random(); </span><br><span class="line"></span><br><span class="line">Supplier&lt;Integer&gt; random = seed::nextInt; </span><br><span class="line"></span><br><span class="line">Stream.generate(random).limit(<span class="number">10</span>).forEach(System.out::println); </span><br><span class="line"></span><br><span class="line"><span class="comment">//Another way </span></span><br><span class="line"></span><br><span class="line">IntStream.generate(() -&gt; (<span class="keyword">int</span>) (System.nanoTime() % <span class="number">100</span>)). </span><br><span class="line"></span><br><span class="line">limit(<span class="number">10</span>).forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+
+<p>Stream.generate() 还接受自己实现的 Supplier。例如在构造海量测试数据的时候，用某种自动的规则给每一个变量赋值；或者依据公式计算 Stream 的每个元素值。这些都是维持状态信息的情形。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自实现 Supplier </span></span><br><span class="line"></span><br><span class="line">Stream.generate(<span class="keyword">new</span> PersonSupplier()). </span><br><span class="line"></span><br><span class="line">limit(<span class="number">10</span>). </span><br><span class="line"></span><br><span class="line">forEach(p -&gt; System.out.println(p.getName() + <span class="string">", "</span> + p.getAge())); </span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">PersonSupplier</span> <span class="keyword">implements</span> <span class="title">Supplier</span>&lt;<span class="title">Person</span>&gt; </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">int</span> index = <span class="number">0</span>; </span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> Random random = <span class="keyword">new</span> Random(); </span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> Person <span class="title">get</span><span class="params">()</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> Person(index++, <span class="string">"StormTestUser"</span> + index, random.nextInt(<span class="number">100</span>)); </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">StormTestUser1, <span class="number">9</span> </span><br><span class="line"></span><br><span class="line">StormTestUser2, <span class="number">12</span> </span><br><span class="line"></span><br><span class="line">StormTestUser3, <span class="number">88</span> </span><br><span class="line"></span><br><span class="line">StormTestUser4, <span class="number">51</span> </span><br><span class="line"></span><br><span class="line">StormTestUser5, <span class="number">22</span> </span><br><span class="line"></span><br><span class="line">StormTestUser6, <span class="number">28</span> </span><br><span class="line"></span><br><span class="line">StormTestUser7, <span class="number">81</span> </span><br><span class="line"></span><br><span class="line">StormTestUser8, <span class="number">51</span> </span><br><span class="line"></span><br><span class="line">StormTestUser9, <span class="number">4</span> </span><br><span class="line"></span><br><span class="line">StormTestUser10, <span class="number">76</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="Stream-iterate"><a href="#Stream-iterate" class="headerlink" title="Stream.iterate"></a>Stream.iterate</h4><p>iterate 跟 reduce 操作很像，接受一个种子值，和一个 UnaryOperator（例如 f）。然后种子值成为 Stream 的第一个元素，f(seed) 为第二个，f(f(seed)) 第三个，以此类推。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成等差数列 </span></span><br><span class="line"></span><br><span class="line">Stream.iterate(<span class="number">0</span>, n -&gt; n + <span class="number">3</span>).limit(<span class="number">10</span>). forEach(x -&gt; System.out.print(x + <span class="string">" "</span>));.</span><br></pre></td></tr></table></figure>
+
+<p>输出结果： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span> <span class="number">3</span> <span class="number">6</span> <span class="number">9</span> <span class="number">12</span> <span class="number">15</span> <span class="number">18</span> <span class="number">21</span> <span class="number">24</span> <span class="number">27</span></span><br></pre></td></tr></table></figure>
+
+<p>与 Stream.generate 相仿，在 iterate 时候管道必须有 limit 这样的操作来限制 Stream 大小。 </p>
+<h2 id="collect-收集数据"><a href="#collect-收集数据" class="headerlink" title="collect 收集数据"></a>collect 收集数据</h2><p>collect 方法作为终端操作，接受的是一个 Collector 接口参数，能对数据进行一些收集归总操作。 </p>
+<h3 id="收集"><a href="#收集" class="headerlink" title="收集"></a>收集</h3><p>最常用的方法，把流中所有元素收集到一个 List, Set 或 Collection 中。 </p>
+<ul>
+<li><p>toList </p>
+</li>
+<li><p>toSet </p>
+</li>
+<li><p>toCollection </p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List newlist = list.stream.collect(toList());</span><br></pre></td></tr></table></figure>
+
+<h3 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h3><ul>
+<li>counting </li>
+</ul>
+<p>用于计算总和： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> l = list.stream().collect(counting());</span><br></pre></td></tr></table></figure>
+
+<p>没错，你应该想到了，下面这样也可以： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">long l = list.stream().count();</span><br></pre></td></tr></table></figure>
+
+<p>推荐第二种 </p>
+<ul>
+<li>summingInt ，summingLong ，summingDouble </li>
+</ul>
+<p>summing，没错，也是计算总和，不过这里需要一个函数参数 </p>
+<p>计算 Person 年龄总和： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> sum = list.stream().collect(summingInt(Person::getAge));</span><br></pre></td></tr></table></figure>
+
+<p>当然，这个可以也简化为： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> sum = list.stream().mapToInt(Person::getAge).sum();</span><br></pre></td></tr></table></figure>
+
+<p>除了上面两种，其实还可以： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> sum = list.stream().map(Person::getAge).reduce(Interger::sum).get();</span><br></pre></td></tr></table></figure>
+
+<p>推荐第二种 </p>
+<p>由此可见，函数式编程通常提供了多种方式来完成同一种操作 </p>
+<ul>
+<li>averagingInt，averagingLong，averagingDouble </li>
+</ul>
+<p>看名字就知道，求平均数 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Double average = list.stream().collect(averagingInt(Person::getAge));</span><br></pre></td></tr></table></figure>
+
+<p>当然也可以这样写 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OptionalDouble average = list.stream().mapToInt(Person::getAge).average();</span><br></pre></td></tr></table></figure>
+
+<p>不过要注意的是，这两种返回的值是不同类型的 </p>
+<ul>
+<li>summarizingInt，summarizingLong，summarizingDouble </li>
+</ul>
+<p>这三个方法比较特殊，比如 summarizingInt 会返回 IntSummaryStatistics 类型 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IntSummaryStatistics l = list.stream().collect(summarizingInt(Person::getAge));</span><br></pre></td></tr></table></figure>
+
+<p>IntSummaryStatistics 包含了计算出来的平均值，总数，总和，最值，可以通过下面这些方法获得相应的数据 </p>
+<h3 id="取最值"><a href="#取最值" class="headerlink" title="取最值"></a>取最值</h3><p>maxBy，minBy 两个方法，需要一个 Comparator 接口作为参数 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Person&gt; optional = list.stream().collect(maxBy(comparing(Person::getAge)));</span><br></pre></td></tr></table></figure>
+
+<p>我们也可以直接使用 max 方法获得同样的结果 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;Person&gt; optional = list.stream().max(comparing(Person::getAge));</span><br></pre></td></tr></table></figure>
+
+<h3 id="joining-连接字符串"><a href="#joining-连接字符串" class="headerlink" title="joining 连接字符串"></a>joining 连接字符串</h3><p>也是一个比较常用的方法，对流里面的字符串元素进行连接，<strong>其底层实现用的是专门用于字符串连接的 StringBuilder</strong> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = list.stream().map(Person::getName).collect(joining());</span><br></pre></td></tr></table></figure>
+
+<p>结果： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jackmiketom</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = list.stream().map(Person::getName).collect(joining(&quot;,&quot;));</span><br></pre></td></tr></table></figure>
+
+<p>结果： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jack,mike,tom</span><br></pre></td></tr></table></figure>
+
+<p>joining 还有一个比较特别的重载方法： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = list.stream().map(Person::getName).collect(joining(<span class="string">" and "</span>, <span class="string">"Today "</span>, <span class="string">" play games."</span>));</span><br></pre></td></tr></table></figure>
+
+<p>结果： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Today jack and mike and tom play games.</span><br></pre></td></tr></table></figure>
+
+<p>即 Today 放开头，play games. 放结尾，and 在中间连接各个字符串。 </p>
+<h3 id="groupingBy-分组"><a href="#groupingBy-分组" class="headerlink" title="groupingBy 分组"></a>groupingBy 分组</h3><p>groupingBy 用于将数据分组，最终返回一个 Map 类型 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, List&lt;Person&gt;&gt; map = list.stream().collect(groupingBy(Person::getAge));</span><br></pre></td></tr></table></figure>
+
+<p>例子中我们按照年龄 age 分组，每一个 Person 对象中年龄相同的归为一组 。 </p>
+<p>另外可以看出，<code>Person::getAge</code> 决定 Map 的键（Integer 类型），list 类型决定 Map 的值。 </p>
+<ul>
+<li>多级分组 </li>
+</ul>
+<p>groupingBy 可以接受一个第二参数实现多级分组： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, Map&lt;T, List&lt;Person&gt;&gt;&gt; map = list.stream().collect(groupingBy(Person::getAge, groupBy(...)));</span><br></pre></td></tr></table></figure>
+
+<p>其中返回的 Map 键为 Integer 类型，值为<code>Map&lt;T, List&lt;Person&gt;&gt;</code> </p>
+<ul>
+<li>按组收集数据 </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Map&lt;Integer, Integer&gt; map = list.stream().collect(groupingBy(Person::getAge, summingInt(Person::getAge)));</span><br></pre></td></tr></table></figure>
+
+<p>该例子中，我们通过年龄进行分组，然后 <code>summingInt(Person::getAge))</code>分别计算每一组的年龄总和（Integer），最终返回一个<code>Map&lt;Integer, Integer&gt;</code> </p>
+<p>根据这个方法，我们可以知道，前面我们写的： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupingBy(Person::getAge)</span><br></pre></td></tr></table></figure>
+
+<p>其实等同于： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupingBy(Person::getAge, toList())</span><br></pre></td></tr></table></figure>
+
+<h3 id="partitioningBy-分区"><a href="#partitioningBy-分区" class="headerlink" title="partitioningBy 分区"></a>partitioningBy 分区</h3><p>分区与分组的区别在于，分区是按照 true 和 false 来分的，因此<code>partitioningBy</code>接受的参数的 lambda 也是 T -&gt; boolean. </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">根据年龄是否小于等于<span class="number">20</span>来分区 </span><br><span class="line"></span><br><span class="line">Map&lt;Boolean, List&lt;Person&gt;&gt; map = list.stream() </span><br><span class="line"></span><br><span class="line">.collect(partitioningBy(p -&gt; p.getAge() &lt;= <span class="number">20</span>)); </span><br><span class="line"></span><br><span class="line">打印输出 </span><br><span class="line"></span><br><span class="line">&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">false</span>=[Person&#123;name=<span class="string">'mike'</span>, age=<span class="number">25</span>&#125;, Person&#123;name=<span class="string">'tom'</span>, age=<span class="number">30</span>&#125;], </span><br><span class="line"></span><br><span class="line"><span class="keyword">true</span>=[Person&#123;name=<span class="string">'jack'</span>, age=<span class="number">20</span>&#125;] </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同样地 <code>partitioningBy</code> 也可以添加一个收集器作为第二参数，进行类似 <code>groupBy</code> 的多重分区等等操作。 </p>
+<h2 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h2><p>之前我就讲到了 parallelStream 方法能生成并行流，因此你通常可以使用 parallelStream 来代替 stream 方法，但是并行的性能问题非常值得我们思考 </p>
+<p>比方说下面这个例子 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = Stream.iterate(<span class="number">1</span>, a -&gt; a + <span class="number">1</span>).limit(<span class="number">100</span>).parallel().reduce(<span class="number">0</span>, Integer::sum);</span><br></pre></td></tr></table></figure>
+
+<p>我们通过这样一行代码来计算 1 到 100 的所有数的和，我们使用了 parallel 来实现并行。 </p>
+<p>但实际上是，这样的计算，效率是非常低的，比不使用并行还低！一方面是因为装箱问题，这个前面也提到过，就不再赘述，还有一方面就是 iterate 方法很难把这些数分成多个独立块来并行执行，因此无形之中降低了效率。 </p>
+<h2 id="流的可分解性"><a href="#流的可分解性" class="headerlink" title="流的可分解性"></a>流的可分解性</h2><p>这就说到流的可分解性问题了，使用并行的时候，我们要注意流背后的数据结构是否易于分解。比如众所周知的 ArrayList 和 LinkedList，明显前者在分解方面占优。 </p>
+<p>我们来看看一些数据源的可分解性情况： </p>
 <table>
 <thead>
 <tr>
-<th>操作类型</th>
-<th align="center">接口方法</th>
+<th align="left">数据源</th>
+<th>可分解性</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>中间操作</td>
-<td align="center">concat(), distinct(), filter(), flatMap(), limit(), map(), peek(), skip(), sorted(), parallel(), sequential(), unordered()</td>
+<td align="left">ArrayList</td>
+<td>极佳</td>
 </tr>
 <tr>
-<td>结束操作</td>
-<td align="center">allMatch(), anyMatch(), collect(), count(),findAny(),findFirst(), forEach(), forEachOrdered(), max(), min() ,noneMatch(), reduce(), toArray()</td>
+<td align="left">LinkedList</td>
+<td>差</td>
+</tr>
+<tr>
+<td align="left">IntStream.range</td>
+<td>极佳</td>
+</tr>
+<tr>
+<td align="left">Stream.iterate</td>
+<td>差</td>
+</tr>
+<tr>
+<td align="left">HashSet</td>
+<td>好</td>
+</tr>
+<tr>
+<td align="left">TreeSet</td>
+<td>好</td>
 </tr>
 </tbody></table>
-<p>区分中间操作和结束操作最简单的方法，就是看方法的返回值，返回值为stream的大都是中间操作，否则是结束操作。 </p>
-<h2 id="stream方法使用"><a href="#stream方法使用" class="headerlink" title="stream方法使用"></a>stream方法使用</h2><p><code>stream</code>跟函数接口关系非常紧密，没有函数接口<code>stream</code>就无法工作。回顾一下：函数接口是指内部只有一个抽象方法的接口。通常函数接口出现的地方都可以使用<code>Lambda</code>表达式，所以不必记忆函数接口的名字。 </p>
-<h4 id="forEach"><a href="#forEach" class="headerlink" title="forEach()"></a>forEach()</h4><p>我们对<code>forEach()</code>方法并不陌生，在<code>Collection</code>中我们已经见过。方法签名为<code>void forEach(Consumer&lt;? super E&gt; action)</code>，作用是对容器中的每个元素执行<code>action</code>指定的动作，也就是对元素进行遍历。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用Stream.forEach()迭代 </span></span><br><span class="line"></span><br><span class="line">Stream&lt;String&gt; str = Stream.of(<span class="string">"I"</span>, <span class="string">"love"</span>, <span class="string">"you"</span>, <span class="string">"too"</span>); </span><br><span class="line"></span><br><span class="line">str.forEach(x-&gt; System.out.println(x));</span><br></pre></td></tr></table></figure>
-
-<h4 id="filter"><a href="#filter" class="headerlink" title="filter()"></a>filter()</h4><p><code>Stream&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate)</code>,作用是返回一个只包含满足<code>predicate</code>条件元素的<code>Stream</code>。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 保留长度等于3的字符串 </span></span><br><span class="line"></span><br><span class="line">Stream&lt;String&gt; stream= Stream.of(<span class="string">"I"</span>, <span class="string">"love"</span>, <span class="string">"you"</span>, <span class="string">"too"</span>); </span><br><span class="line"></span><br><span class="line">stream.filter(str -&gt; str.length()==<span class="number">3</span>) </span><br><span class="line"></span><br><span class="line">.forEach(str -&gt; System.out.println(str));</span><br></pre></td></tr></table></figure>
-
-<p>上述代码将输出为长度等于3的字符串 <code>you</code> 和 <code>too</code> 。注意，由于 <code>filter()</code> 是个中间操作，如果只调用 <code>filter()</code> 不会有实际计算，因此也不会输出任何信息。 </p>
-<p>如果使用多条件过滤，可以直接在 <code>filter</code> 中添加，如上例，也可以 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str.filter(x-&gt;x.length() == <span class="number">3</span> &amp;&amp; x.endsWith(<span class="string">"o"</span>)).forEach(x-&gt; System.out.println(x));</span><br></pre></td></tr></table></figure>
-
-<p>当然也可以再来一个 <code>filter()</code> ,这样其实就是在此对上一个 <code>filter()</code> 返回的 <code>stream</code> 再次使用 <code>filter()</code> 方法，当然只是可以，开发中并没有这种必要。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str.filter(x-&gt;x.length() == <span class="number">3</span>)</span><br><span class="line">  .filter(x-&gt;x.endsWith(<span class="string">"o"</span>)).forEach(x-&gt; System.out.println(x));</span><br></pre></td></tr></table></figure>
-
-<h4 id="distinct"><a href="#distinct" class="headerlink" title="distinct()"></a>distinct()</h4><p>函数原型为 <code>Stream&lt;T&gt; distinct()</code> ，作用是返回一个去除重复元素之后的 <code>Stream</code> 。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stream= Stream.of(<span class="string">"I"</span>, <span class="string">"love"</span>, <span class="string">"you"</span>, <span class="string">"too"</span>, <span class="string">"too"</span>); </span><br><span class="line"></span><br><span class="line">stream.distinct() </span><br><span class="line"></span><br><span class="line">.forEach(str -&gt; System.out.println(str));</span><br></pre></td></tr></table></figure>
-
-<p>上述代码会输出去掉一个too之后的其余字符串。 </p>
-<p>(看到这里自然而然就会想到，如果我们的stream中不是基本数据类型，而是实体类如何进行去重，回头单独写一篇博文，不在这里展开了) </p>
-<h4 id="sorted"><a href="#sorted" class="headerlink" title="sorted()"></a>sorted()</h4><p>排序函数有两个，一个是用自然顺序排序，一个是使用自定义比较器排序，函数原型分别为<code>Stream&lt;T&gt;　sorted()</code>和<code>Stream&lt;T&gt;　sorted(Comparator&lt;? super T&gt; comparator)</code>。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stream= Stream.of(<span class="string">"I"</span>, <span class="string">"love"</span>, <span class="string">"you"</span>, <span class="string">"too"</span>); </span><br><span class="line"></span><br><span class="line">stream.sorted((str1, str2) -&gt; str1.length()-str2.length()) </span><br><span class="line"></span><br><span class="line">.forEach(str -&gt; System.out.println(str));</span><br></pre></td></tr></table></figure>
-
-<h4 id="map"><a href="#map" class="headerlink" title="map()"></a>map()</h4><p>函数原型为 <code>&lt;R&gt; Stream&lt;R&gt; map(Function&lt;? super T,? extends R&gt; mapper)</code> ,作用是返回一个对当前所有元素执行执行 <code>mapper</code> 之后的结果组成的 <code>Stream</code> 。直观的说，就是对每个元素按照某种操作进行转换，转换前后 <code>Stream</code> 中元素的个数不会改变，但元素的类型取决于转换之后的类型。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;String&gt; stream　= Stream.of(<span class="string">"I"</span>, <span class="string">"love"</span>, <span class="string">"you"</span>, <span class="string">"too"</span>); </span><br><span class="line"></span><br><span class="line">stream.map(str -&gt; str.toUpperCase()) </span><br><span class="line"></span><br><span class="line">.forEach(str -&gt; System.out.println(str));</span><br></pre></td></tr></table></figure>
-
-<p>上述代码将输出原字符串的大写形式。 </p>
-<p>这里多说一句我在项目中的实际应用，在数据库查询列表时返回的是实体类，但是返回给前端的数据结构是VO类型的，这里就会用下 <code>map()</code> 方法转换。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取数据 </span></span><br><span class="line"></span><br><span class="line">List&lt;ProductPrice&gt; productPriceList =productPriceMapper.select(productPrice); </span><br><span class="line"></span><br><span class="line">ProductPriceVOList = productPriceList.stream() </span><br><span class="line"></span><br><span class="line">.map(item -&gt; &#123; </span><br><span class="line"></span><br><span class="line">ProductPriceVO vo = <span class="keyword">new</span> ProductPriceVO(); </span><br><span class="line">  </span><br><span class="line"><span class="comment">//转换数据 </span></span><br><span class="line">BeanUtils.copyProperties(item, vo); </span><br><span class="line"></span><br><span class="line"><span class="comment">//返回新类型数据 </span></span><br><span class="line"><span class="keyword">return</span> vo; </span><br><span class="line">  </span><br><span class="line"><span class="comment">//转换成list </span></span><br><span class="line">&#125;).collect(Collectors.toList());</span><br></pre></td></tr></table></figure>
-
-<h3 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap()"></a>flatMap()</h3><p>函数原型为 <code>&lt;R&gt; Stream&lt;R&gt; flatMap(Function&lt;? super T,? extends Stream&lt;? extends R&gt;&gt; mapper)</code> ,作用是对每个元素执行<code>mapper</code>指定的操作，并用所有 <code>mapper</code> 返回的 <code>Stream</code> 中的元素组成一个新的 <code>Stream</code> 作为最终返回结果。说起来太拗口，通俗的讲flatMap()的作用就相当于把原stream中的所有元素都”摊平”之后组成的 <code>Stream</code> ，转换前后元素的个数和类型都可能会改变。 </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Stream&lt;List&lt;Integer&gt;&gt; stream = Stream.of(Arrays.asList(<span class="number">1</span>,<span class="number">2</span>), Arrays.asList(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)); </span><br><span class="line"></span><br><span class="line">stream.flatMap(list -&gt; list.stream()) </span><br><span class="line"></span><br><span class="line">.forEach(i -&gt; System.out.println(i));</span><br></pre></td></tr></table></figure>
-
-<p> 上述代码中，原来的 <code>stream</code> 中有两个元素，分别是两个 <code>List&lt;Integer&gt;</code> ，执行<code>flatMap()</code>之后，将每个 <code>List</code> 都“摊平”成了一个个的数字，所以会新产生一个由5个数字组成的 <code>Stream</code> 。所以最终将输出1~5这5个数字。 </p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>截止到目前我们感觉良好，已介绍 <code>Stream</code> API理解起来并不费劲儿。如果你就此以为函数式编程不过如此，恐怕是高兴地太早了。下一节对 <code>Stream</code> 规约操作的介绍将刷新你现在的认识。 </p>
+<h2 id="顺序性"><a href="#顺序性" class="headerlink" title="顺序性"></a>顺序性</h2><p>除了可分解性，和刚刚提到的装箱问题，还有一点值得注意的是一些操作本身在并行流上的性能就比顺序流要差，比如：limit，findFirst，因为这两个方法会考虑元素的顺序性，而并行本身就是违背顺序性的，也是因为如此 findAny 一般比 findFirst 的效率要高。 </p>
+<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>经过这两章的介绍，我们总结Stream 的特性可以归纳为： </p>
+<ul>
+<li><p>不是数据结构 </p>
+</li>
+<li><p>它没有内部存储，它只是用操作管道从 source（数据结构、数组、generator function、IO channel）抓取数据。 </p>
+</li>
+<li><p>它也绝不修改自己所封装的底层数据结构的数据。例如 Stream 的 filter 操作会产生一个不包含被过滤元素的新 Stream，而不是从 source 删除那些元素。 </p>
+</li>
+<li><p>所有 Stream 的操作必须以 lambda 表达式为参数 </p>
+</li>
+<li><p>不支持索引访问 </p>
+</li>
+<li><p>你可以请求第一个元素，但无法请求第二个，第三个，或最后一个。不过请参阅下一项。 </p>
+</li>
+<li><p>很容易生成数组或者 List </p>
+</li>
+<li><p>惰性化 </p>
+</li>
+<li><p>很多 Stream 操作是向后延迟的，一直到它弄清楚了最后需要多少数据才会开始。 </p>
+</li>
+<li><p>Intermediate 操作永远是惰性化的。 </p>
+</li>
+<li><p>并行能力当一个 Stream 是并行化的，就不需要再写多线程代码，所有对它的操作会自动并行进行的。 </p>
+</li>
+<li><p>可以是无限的 </p>
+</li>
+<li><p>集合有固定大小，Stream 则不必。limit(n) 和 findFirst() 这类的 short-circuiting 操作可以对无限的 Stream 进行运算并很快完成。 </p>
+</li>
+</ul>
 
       
 
@@ -360,7 +555,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/05/JAVA 8 Stream 基础篇 /" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/09/JAVA 8 Stream 高级篇/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -374,18 +569,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2019/08/06/StreamDistinct/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          JAVA 8 Stream 基础篇之distinct()
-        
-      </div>
-    </a>
   
-  
-    <a href="/2019/07/30/Mybatis 传递复杂实体类 /" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Mybatis 传递复杂实体类</div>
+    <a href="/2019/08/08/JAVA 8 Stream 基础篇 /" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JAVA 8 Stream 基础篇</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -511,19 +697,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Stream</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">JVM</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
+                <a href="javascript:void(0)" class="js-tag color4">Map</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">Map</a>
+                <a href="javascript:void(0)" class="js-tag color2">Stream</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
