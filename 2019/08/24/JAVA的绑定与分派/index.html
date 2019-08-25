@@ -6,19 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>TINSCON</title>
+  <title>JAVA 的绑定与分派 | TINSCON</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="未来可期">
-<meta name="keywords" content="keywords">
-<meta property="og:type" content="website">
-<meta property="og:title" content="TINSCON">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="JAVA 的绑定与分派1Father ft = new Son();  首先，我们要先明确几个基本概念。   特别说明，本文的说明和定义在没有明确说明的情况下，都是针对java语言，本人在网上也看到过很多人在介绍这里是对比了C，C++，但是由于本人不了解这两种语言，在出现对比时，仅仅是把《java核心技术》的说明引用过来，不再做解释。    更特别的说明，本人在网上找了很多关于动态/静态绑定与静态">
+<meta name="keywords" content="JAVA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA 的绑定与分派">
+<meta property="og:url" content="http://yoursite.com/2019/08/24/JAVA的绑定与分派/index.html">
 <meta property="og:site_name" content="TINSCON">
-<meta property="og:description" content="未来可期">
+<meta property="og:description" content="JAVA 的绑定与分派1Father ft = new Son();  首先，我们要先明确几个基本概念。   特别说明，本文的说明和定义在没有明确说明的情况下，都是针对java语言，本人在网上也看到过很多人在介绍这里是对比了C，C++，但是由于本人不了解这两种语言，在出现对比时，仅仅是把《java核心技术》的说明引用过来，不再做解释。    更特别的说明，本人在网上找了很多关于动态/静态绑定与静态">
 <meta property="og:locale" content="zh-hans">
+<meta property="og:image" content="http://yoursite.com/img/java/zihuamethod.png">
+<meta property="og:image" content="http://yoursite.com/img/java/shumethod.jpg">
+<meta property="og:updated_time" content="2019-08-25T13:50:28.822Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="TINSCON">
-<meta name="twitter:description" content="未来可期">
+<meta name="twitter:title" content="JAVA 的绑定与分派">
+<meta name="twitter:description" content="JAVA 的绑定与分派1Father ft = new Son();  首先，我们要先明确几个基本概念。   特别说明，本文的说明和定义在没有明确说明的情况下，都是针对java语言，本人在网上也看到过很多人在介绍这里是对比了C，C++，但是由于本人不了解这两种语言，在出现对比时，仅仅是把《java核心技术》的说明引用过来，不再做解释。    更特别的说明，本人在网上找了很多关于动态/静态绑定与静态">
+<meta name="twitter:image" content="http://yoursite.com/img/java/zihuamethod.png">
   
     <link rel="alternative" href="/atom.xml" title="TINSCON" type="application/atom+xml">
   
@@ -158,16 +162,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-JAVA的绑定与分派" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-JAVA的绑定与分派" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/24/JAVA的绑定与分派/">JAVA 的绑定与分派</a>
+    <h1 class="article-title" itemprop="name">
+      JAVA 的绑定与分派
     </h1>
   
 
@@ -189,9 +191,129 @@
 <blockquote>
 <p>更特别的说明，本人在网上找了很多关于动态/静态绑定与静态或动态分派的文章，企图从某篇文章中获取到关于他们的比较，但是很遗憾，并没有。而我对他们的理解还不足以对他们进行原理上的对比，所以这里采取分开介绍，等后续进行比较深入的研究之后，在做一份比较详细，或者说是本质上的对比。 </p>
 </blockquote>
-        
+<a id="more"></a> 
+
+<ul>
+<li><p>静态类型： 也叫做外观类型，即上面Father的类型。 </p>
+</li>
+<li><p>实际类型： 即上面Son的类型。 </p>
+</li>
+</ul>
+<p>静态类型和实际类型在程序中都可以发生一些变化，区别是静态类型的变化仅仅才使用时发生，变量本身的静态类型不会被改变，并且最终的静态类型在编译器可知；而实际类型的变化结果在运行期可确定，编译器在不编译程序时并不知道一个对象的实际类型是什么。 </p>
+<ul>
+<li>隐式参数：即方法调用的对象的类型。 </li>
+</ul>
+<h2 id="方法的调用"><a href="#方法的调用" class="headerlink" title="方法的调用"></a>方法的调用</h2><p>在开始介绍绑定与，分派之前，我们需要了解一下Java方法调用的原理，这将有助于我们理解绑定与分派。 </p>
+<h3 id="x-f-args"><a href="#x-f-args" class="headerlink" title="x.f(args)"></a>x.f(args)</h3><ul>
+<li><p>编译器查看对象的声明类型与方法名。假设调用x.f(param),且隐式参数x声明为C类的对象。需要注意的是：有可能存在多个名字为f，但参数类型不一样的方法。例如，可能存在f(int)和f(String)。编译器将会一一列举所有的C类中名为f的方法和超类中访问属性为public且名为f的方法(超类的私有方法除外)。至此，<strong>编译器已获得所有可能被调用的候选方法</strong>。 </p>
+</li>
+<li><p>接下来，编译器查看调用方法时提供的参数类型。如果在所有的名为f的方法中存在一个与提供的参数类型完全匹配，就选择这个方法。这个过程被称为<strong>重载解析</strong>，例如，对于调用x.f(“hello”)来说，编译器将会挑选f(String),而不是f.(int)，由于类型可以转换，这个过程可能很复杂。如果编译器没有找到与参数类型匹配的方法，或者发现经过类型转换之后出现多个方法与之匹配，就会报告一个错误。至此，编译器已经获取了方法名与参数类型。 </p>
+</li>
+<li><p><strong>如果方法是private，static，final方法或者构造器，那么编译器可以准确的知道应该调用哪个方法，我们将这种调用方式称为静态绑定</strong>。与此对应的是，调用的方法依赖于隐式参数的<strong>实际类型</strong>，并且在运行时实现动态绑定。在我们列举的示例中，编译器采用动态绑定的方式生成了一条调用的f(String)的指令。 </p>
+</li>
+<li><p>当程序运行，并且采用动态绑定调用方法时，虚拟机一定调用与x所引用对象的实际类型最适合的那个类的方法。假设，x的实际类型时D，它是C的子类。如果D类定义了方法f(String)，就直接调用它，否则就在D类的超类中寻找f(String),以此类推。每次调用方法都要进行搜索，时间开销相当大。因此虚拟机预先为每个类创建了方法表，其中列出了所有方法的签名和实际调用的方法。这样一来，在真正调用方法的时候，虚拟机仅查找这个表就行了。在前面的例子中，虚拟机搜索D类的方法表，以便寻找与f(String)相匹配的方法。这这个方法既有可能是D.f(String)也有可能是X.f(String)，这里X是D的超类。这里需要注意的是，如果调用super.f(String)，编译器将对隐式参数超类的方法表进行搜索。 </p>
+</li>
+<li><p>方法表： </p>
+</li>
+</ul>
+<p><img src="/img/java/zihuamethod.png" alt="image"> </p>
+<p>这里子类和超类都具有的方法f(),来自于公共的超类，比如Object。而z()方法来自于超类，所以子类中z()方法指向了超类的方法表。而v()方法来自子类本身，所以指向自身的方法表。(本来准备从网上找一张的，但是发现都是借来借去的，这图虽然简陋一点，至少说明了全部的情况，可以自行搜索网上的版本，对比一下。) </p>
+<ul>
+<li>ok，关于方法的调用到这就介绍完了，下面开始介绍绑定和分派。 </li>
+</ul>
+<h2 id="静态绑定与动态绑定"><a href="#静态绑定与动态绑定" class="headerlink" title="静态绑定与动态绑定"></a>静态绑定与动态绑定</h2><h3 id="程序的绑定"><a href="#程序的绑定" class="headerlink" title="程序的绑定"></a>程序的绑定</h3><p>绑定指的是一个方法的调用与方法所在的类(方法主体)关联起来。对java来说，绑定分为静态绑定和动态绑定；或者叫做前期绑定和后期绑定. </p>
+<h3 id="静态绑定"><a href="#静态绑定" class="headerlink" title="静态绑定"></a>静态绑定</h3><p>在程序执行前方法已经被绑定（也就是说在编译过程中就已经知道这个方法到底是哪个类中的方法），此时由编译器或其它连接程序实现。在Java中，final、private、static修饰的方法以及构造函数都是静态绑定的，不需程序运行，不需具体的实例对象就可以知道这个方法的具体内容。 </p>
+<h3 id="动态绑定"><a href="#动态绑定" class="headerlink" title="动态绑定"></a>动态绑定</h3><p>动态绑定（后期绑定）是指：在程序运行过程中，根据具体的实例对象才能具体确定是哪个方法。动态绑定是多态性得以实现的重要因素，它通过方法表来实现：每个类被加载到虚拟机时，在方法区保存元数据，其中，包括一个叫做 <strong>方法表（method table）</strong>的东西，表中记录了这个类定义的方法的指针，每个表项指向一个具体的方法代码。如果这个类重写了父类中的某个方法，则对应表项指向新的代码实现处。从父类继承来的方法位于子类定义的方法的前面。 </p>
+<ul>
+<li><p>动态绑定语句的编译、运行原理：我们假设 Father ft=new Son(); ft.say(); Son继承自Father，重写了say()。 </p>
+</li>
+<li><p>编译：我们知道，向上转型时，用父类引用执行子类对象，并可以用父类引用调用子类中重写了的同名方法。但是不能调用子类中新增的方法，为什么呢？因为在代码的编译阶段，编译器通过 声明对象的类型（即引用本身的类型） 在方法区中该类型的方法表中查找匹配的方法（最佳匹配法：参数类型最接近的被调用），如果有则编译通过。（这里是根据声明的对象类型来查找的，所以此处是查找 Father类的方法表，而Father类方法表中是没有子类新增的方法的，所以不能调用。）编译阶段是确保方法的存在性，保证程序能顺利、安全运行。 </p>
+</li>
+<li><p>运行：我们又知道，ft.say()调用的是Son中的say()，这不就与上面说的，查找Father类的方法表的匹配方法矛盾了吗？不，这里就是动态绑定机制的真正体现。上面编译阶段在 声明对象类型 的方法表中查找方法，只是为了安全地通过编译（也为了检验方法是否是存在的）。而在实际运行这条语句时，在执行 Father ft=new Son(); 这一句时创建了一个Son实例对象，然后在 ft.say() 调用方法时，JVM会把刚才的son对象压入操作数栈，用它来进行调用。而用实例对象进行方法调用的过程就是动态绑定：根据实例对象所属的类型去查找它的方法表，找到匹配的方法进行调用。我们知道，子类中如果重写了父类的方法，则方法表中同名表项会指向子类的方法代码；若无重写，则按照父类中的方法表顺序保存在子类方法表中。故此：动态绑定根据对象的类型的方法表查找方法是一定会匹配（因为编译时在父类方法表中以及查找并匹配成功了，说明方法是存在的。这也解释了为何向上转型时父类引用不能调用子类新增的方法：在父类方法表中必须先对这个方法的存在性进行检验，如果在运行时才检验就容易出危险——可能子类中也没有这个方法）。 </p>
+</li>
+</ul>
+<p><strong>区分</strong>：程序在JVM运行过程中，会把类的类型信息、static属性和方法、final常量等元数据加载到方法区，这些在类被加载时就已经知道，不需对象的创建就能访问的，就是静态绑定的内容；需要等对象创建出来，使用时根据堆中的实例对象的类型才进行取用的就是动态绑定的内容。 </p>
+<h2 id="静态分派与动态分派"><a href="#静态分派与动态分派" class="headerlink" title="静态分派与动态分派"></a>静态分派与动态分派</h2><h3 id="方法解析"><a href="#方法解析" class="headerlink" title="方法解析"></a>方法解析</h3><p>在类加载的解析阶段，会将其中一部分符号引用直接转化为直接饮用，前提是：方法在程序真正运行之前就有一个可确定的版本，并且这个方法的调用版本在运行期是不可改变的。换句话说，调用目标在程序代码写好，编译器进行编译时就必须确定下来。这类方法的调用称为解析（Resolution）。 </p>
+<p>符合这个要求的方法，主要包括：静态方法 和 私有方法。因为这两个方法的特点就决定了他们都不可能通过继承或别的方式重写其他版本。 </p>
+<p>与之相对应的，Java 虚拟机里面提供了5条方法调用字节码指令，分别如下： </p>
+<p><code>invokestatic</code>：调用静态方法 </p>
+<p><code>invokespecial</code>：调用<init>方法、私有方法和父类方法 </init></p>
+<p><code>invokevirtual</code>：调用所有的虚方法 </p>
+<p><code>invokeinterface</code>：调用接口方法，会在运行时在确定一个实现此接口的对象 </p>
+<p><code>invokedynamic</code>：会在运行时动态解析出调用电限定符所引用的方法，然后再执行该方法。 </p>
+<p>只能被 invokestatic 和 invokespecial 调用的方法，都可以在解析阶段中确定唯一的调用版本，符合这个条件的有 静态方法、私有方法、实例构造器、父类方法4类，这些方法称为 非虚方法，由于 final 修饰的方法不能被覆盖，也属于非虚方法。与之相反，其他的方法称为虚方法。 </p>
+<h3 id="静态分派"><a href="#静态分派" class="headerlink" title="静态分派"></a>静态分派</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticDispatch</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Human</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Man</span> <span class="keyword">extends</span> <span class="title">Human</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Woman</span> <span class="keyword">extends</span> <span class="title">Human</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(Human guy)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"hello,guy!"</span>); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(Man guy)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"hello,gentleman!"</span>); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(Woman guy)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"hello,lady!"</span>); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">Human man = <span class="keyword">new</span> Man(); </span><br><span class="line"></span><br><span class="line">Human woman = <span class="keyword">new</span> Woman(); </span><br><span class="line"></span><br><span class="line">StaticDispatch sr = <span class="keyword">new</span> StaticDispatch(); </span><br><span class="line"></span><br><span class="line">sr.sayHello(man); </span><br><span class="line"></span><br><span class="line">sr.sayHello(woman); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果如下： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hello,guy! </span><br><span class="line"></span><br><span class="line">hello,guy!</span><br></pre></td></tr></table></figure>
+
+<p>为什么会选择参数类型为 Human 的重载呢？首先，我们看下面两个重要概念。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Human man = <span class="keyword">new</span> Man();</span><br></pre></td></tr></table></figure>
+
+<p>我们将上面代码中的 “Human” 称为变量”man“的 静态类型（Static Type），或者叫做 外观类型（Apparent Type）。后面的 ”Man“则称为变量的实际类型（Actual Type）。 </p>
+<p>静态类型和实际类型都可以发生变化，区别是静态类型仅仅在使用时变化，变量本身的静态类型不会改变，并且最终的静态类型是编译可知的。而实际类型变化结果只有在运行期才确定，编译器在编译程序的时候，不知道一个对象的实际类型是什么。 </p>
+<p>虚拟机在重载时是通过参数的静态类型而不是实际类型作为判定依据的。并且静态类型是编译器可知的，因此，在编译期，Javac 编译器会根据参数的静态类型决定使用哪个重载版本，所以选择了 sayHello(Human)，并把这个方法的符号引用写入 main() 方法的两条 invokevirtual 指令的参数中。 </p>
+<h3 id="动态分派"><a href="#动态分派" class="headerlink" title="动态分派"></a>动态分派</h3><p>运行时期，依赖于 实际类型来定位方法执行的分派动作（重写 Override） 属于动态分派。 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicDispatch</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Human</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Man</span> <span class="keyword">extends</span> <span class="title">Human</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"man say hello"</span>); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Woman</span> <span class="keyword">extends</span> <span class="title">Human</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span> </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"woman say hello"</span>); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">Human man = <span class="keyword">new</span> Man(); </span><br><span class="line"></span><br><span class="line">Human woman = <span class="keyword">new</span> Woman(); </span><br><span class="line"></span><br><span class="line">man.sayHello(); </span><br><span class="line"></span><br><span class="line">woman.sayHello(); </span><br><span class="line"></span><br><span class="line">man = <span class="keyword">new</span> Woman(); </span><br><span class="line"></span><br><span class="line">man.sayHello(); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行结果： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">man say hello </span><br><span class="line"></span><br><span class="line">woman say hello </span><br><span class="line"></span><br><span class="line">woman say hello</span><br></pre></td></tr></table></figure>
+
+<p>我们用 javap命令输出这段代码的字节码： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(java.lang.String[])</span></span>; </span><br><span class="line"></span><br><span class="line">flags: ACC_PUBLIC, ACC_STATIC </span><br><span class="line"></span><br><span class="line">Code: </span><br><span class="line"></span><br><span class="line">stack=<span class="number">2</span>, locals=<span class="number">3</span>, args_size=<span class="number">1</span> </span><br><span class="line"></span><br><span class="line">0: new #16 // class org/bupt/xiaoye/DynamicDispatch$Man </span><br><span class="line"></span><br><span class="line"><span class="number">3</span>: dup </span><br><span class="line"></span><br><span class="line">4: invokespecial #18 // Method org/bupt/xiaoye/DynamicDispatch$Man."&lt;init&gt;":()V </span><br><span class="line"></span><br><span class="line"><span class="number">7</span>: astore_1 </span><br><span class="line"></span><br><span class="line">8: new #19 // class org/bupt/xiaoye/DynamicDispatch$Woman </span><br><span class="line"></span><br><span class="line"><span class="number">11</span>: dup </span><br><span class="line"></span><br><span class="line">12: invokespecial #21 // Method org/bupt/xiaoye/DynamicDispatch$Woman."&lt;init&gt;":()V </span><br><span class="line"></span><br><span class="line"><span class="number">15</span>: astore_2 </span><br><span class="line"></span><br><span class="line"><span class="number">16</span>: aload_1 </span><br><span class="line"></span><br><span class="line">17: invokevirtual #22 // Method org/bupt/xiaoye/DynamicDispatch$Human.sayHello:()V </span><br><span class="line"></span><br><span class="line"><span class="number">20</span>: aload_2 </span><br><span class="line"></span><br><span class="line">21: invokevirtual #22 // Method org/bupt/xiaoye/DynamicDispatch$Human.sayHello:()V </span><br><span class="line"></span><br><span class="line">24: new #19 // class org/bupt/xiaoye/DynamicDispatch$Woman </span><br><span class="line"></span><br><span class="line"><span class="number">27</span>: dup </span><br><span class="line"></span><br><span class="line">28: invokespecial #21 // Method org/bupt/xiaoye/DynamicDispatch$Woman."&lt;init&gt;":()V </span><br><span class="line"></span><br><span class="line"><span class="number">31</span>: astore_1 </span><br><span class="line"></span><br><span class="line"><span class="number">32</span>: aload_1 </span><br><span class="line"></span><br><span class="line">33: invokevirtual #22 // Method org/bupt/xiaoye/DynamicDispatch$Human.sayHello:()V </span><br><span class="line"></span><br><span class="line"><span class="number">36</span>: <span class="keyword">return</span> </span><br><span class="line"></span><br><span class="line">LineNumberTable: </span><br><span class="line"></span><br><span class="line">line <span class="number">28</span>: <span class="number">0</span> </span><br><span class="line"></span><br><span class="line">line <span class="number">29</span>: <span class="number">8</span> </span><br><span class="line"></span><br><span class="line">line <span class="number">30</span>: <span class="number">16</span> </span><br><span class="line"></span><br><span class="line">line <span class="number">31</span>: <span class="number">20</span> </span><br><span class="line"></span><br><span class="line">line <span class="number">32</span>: <span class="number">24</span> </span><br><span class="line"></span><br><span class="line">line <span class="number">33</span>: <span class="number">32</span> </span><br><span class="line"></span><br><span class="line">line <span class="number">34</span>: <span class="number">36</span> </span><br><span class="line"></span><br><span class="line">LocalVariableTable: </span><br><span class="line"></span><br><span class="line">Start Length Slot Name Signature </span><br><span class="line"></span><br><span class="line"><span class="number">0</span> <span class="number">37</span> <span class="number">0</span> args [Ljava/lang/String; </span><br><span class="line"></span><br><span class="line"><span class="number">8</span> <span class="number">29</span> <span class="number">1</span> man Lorg/bupt/xiaoye/DynamicDispatch$Human; </span><br><span class="line"></span><br><span class="line"><span class="number">16</span> <span class="number">21</span> <span class="number">2</span> woman Lorg/bupt/xiaoye/DynamicDispatch$Human; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>0～15行的字节码是准备动作，作用是建立man和woman的内存空间,调用man和woman类型的实例构造函数，将这两个实例的引用存放在第1，2个局部变量表Slot之中，这个动作也就是对应了代码中的这两句： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Huamn man = <span class="keyword">new</span> Man(); </span><br><span class="line"></span><br><span class="line">Human woman = <span class="keyword">new</span> Woman();</span><br></pre></td></tr></table></figure>
+
+<p>接下来的16-21句是关键部分。16、20两句将创建的两个对象的引用压到栈顶，这两个对象是将要执行的 sayHello() 方法的所有者，称为接受者（Receiver）；17、21句是方法调用指令，但是这两条指令的最终执行的目标方法并不相同。原因就需要从 invokevirtual 指令的动态查找过程开始说起， invokevirtual 指令的运行时解析过程大致分为以下几个步骤： </p>
+<p>找到操作数栈顶的第一个元素所指向的对象的实际类型，记做 C。 </p>
+<p>如果在类型 C 中找到与常量中的描述符和简单名称都相符的方法，则进行访问权限校验。如果通过，则返回这个方法的直接饮用，查找过程结束：如果不通过，则返回 java.lang.IllegalAccessError 异常。 </p>
+<p>否则，按照继承关系从下往上依次对C 的各个父类进行第2步的搜索和验证过程。 </p>
+<p>如果始终没有找到合适的方法，则抛出 java.lang.AbstractMethodError 异常。 </p>
+<h3 id="单分派与多分派"><a href="#单分派与多分派" class="headerlink" title="单分派与多分派"></a>单分派与多分派</h3><p>关于分派还可以分为单分派和多分派，在这里就不再详细介绍了(有兴趣的小伙伴可以自行查看资料，我自己也是云里雾里的，给大家贴一下书里的demo)。 </p>
+<p>方法的接受者与方法的参数统称为方法的宗量。根据分派基于多少宗量，可以将分派划分为 单分派和 多分派两种。 </p>
+<p>我们来看一段代码 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Dispatch</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">QQ</span> </span>&#123;&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">_360</span> </span>&#123;&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Father</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hardChoice</span><span class="params">(QQ arg)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"father choose qq"</span>); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hardChoice</span><span class="params">(_360 arg)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"father choose 360"</span>); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Son</span> <span class="keyword">extends</span> <span class="title">Father</span> </span>&#123; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hardChoice</span><span class="params">(QQ arg)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"son choose qq"</span>); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">hardChoice</span><span class="params">(_360 arg)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">System.out.println(<span class="string">"son choose 360"</span>); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">Father father = <span class="keyword">new</span> Father(); </span><br><span class="line"></span><br><span class="line">Father son = <span class="keyword">new</span> Son(); </span><br><span class="line"></span><br><span class="line">father.hardChoice(<span class="keyword">new</span> _360()); </span><br><span class="line"></span><br><span class="line">son.hardChoice(<span class="keyword">new</span> QQ()); </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>单分派是根据一个宗量对目标方法进行选择，多分派则是根据多于一个宗量对目标方法进行选择。 </p>
+<p>在静态分派的过程中，选择目标方法的依据有两点：1、看对象的静态类型时什么，即使 Father 还是 Son。 2、方法参数的类型和数量是什么是 QQ还是 360 。因为是根据两个宗量进行选择，所以 Java 语言的 静态分派属于多分派类型。 </p>
+<p>在动态分派的过程中，由于编译器已经决定了目标方法的签名，因此只需要找到方法的接受者就可以了。因为是根据一个宗量进行选择，所以 Java 语言的 动态分派属单分派类型。 </p>
+<h3 id="动态分派的实现"><a href="#动态分派的实现" class="headerlink" title="动态分派的实现"></a>动态分派的实现</h3><p>由于动态分配是非常频繁的动作，而且动态分配的方法版本选择过程需要运行时在 类的方法元数据中搜索合适的目标方法，因此在虚拟机的实际实现中，基于性能的考虑，大部分实现都不会真正的进行如此频繁的搜索。最常用的手段就是为类在方法去中建立一个 虚方法表（Virtual Method Table , 也称为 vtable ，与此对应的，在 invokeinterface 执行时也会用到 接口方法表-Inteface Method Table ， 简称 itable），使用虚方法表索引来代替元数据查找以提高性能。 </p>
+<p>以上面代码为例，虚方法表结构如图： </p>
+<p><img src="/img/java/shumethod.jpg" alt="image"> </p>
+<p>(这个就是书上的原图) </p>
+<p>虚方法表中存放着各个方法的实际入口地址。如果某个方法在子类中没有被重写，那子类的虚方法表里面的地址入口和弗雷相同方法的地址入口是一致的，都指向父类的实现入口。如果子类中重写了这个方法，子类方法表中的地址将会替换为指向子类实现版本的入口。如上图，Son 重写了来自于 Father 的全部方法，因此 Son 的方发表没有指向 Father 类型数据的箭头。但是 Son 和 Father 都没有重写来自于 Object 的方法，所以他们的方法表中所有从 Object 继承来的方法都指向了 Object 的数据类型。 </p>
+<p>方法表一般在类加载的 连接阶段进行初始化，准备了类的变量初始值之后，虚拟机会把该类的方法表也初始化完毕。 </p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>上面是关于《Java核心技术》与《深入理解虚拟机》中分别对绑定和分派的介绍，在关于他们的对比上自己也是很懵懂。自己也是研究了好久，并没有什么实质性的进展。但是也有一点自己的心得，上面的绑定与分派更像是从两个层面介绍java多态性的原因，至少看起来是，而且关于动态/静态绑定与动态/静态分派几乎是一一对应，包括两本书对其底层的原理介绍时，大部分的描述也是一致的。但是由于本人并没有找到确切的官方说明或者理论依据证明他们的一样的，所以还需要小伙伴自己去发现。在这里我有一个大致的思路，把动态/静态绑定的字节码拉出来分析一波，看看是不是和分派一样。有时间会把分析的结果拉出来分享给大家。 </p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>学习的道路孤单却不孤独<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wechat.jpeg">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -211,16 +333,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/24/JAVA的绑定与分派/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2019/08/24/JAVA的绑定与分派/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2019/08/19/更改器访问器方法 -- get()set()/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JAVA 访问器/更改器方法 -- get()/set()</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -240,687 +421,14 @@
 
 
 
-
-  
-    <article id="post-更改器访问器方法 -- get()set()" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/19/更改器访问器方法 -- get()set()/">JAVA 访问器/更改器方法 -- get()/set()</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/19/更改器访问器方法 -- get()set()/" class="archive-article-date">
-  	<time datetime="2019-08-19T15:47:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="更改器-访问器方法-–-get-set"><a href="#更改器-访问器方法-–-get-set" class="headerlink" title="更改器/访问器方法 – get()/set()"></a>更改器/访问器方法 – get()/set()</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>不要编写返回引用可变对象的访问器方法。– JAVA 核心技术 </p>
-</blockquote>
-<p>更改器和访问器方法简单来说就是get()/set()方法，这里要区别于getter()和setter()方法，后者是前者一种特殊用法的表现。 </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/19/更改器访问器方法 -- get()set()/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-INSERT INTO SELECT 和 SELECT INTO" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/12/INSERT INTO SELECT 和 SELECT INTO/">SELECT INTO 和 INSERT INTO SELECT</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/12/INSERT INTO SELECT 和 SELECT INTO/" class="archive-article-date">
-  	<time datetime="2019-08-12T14:50:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="SELECT-INTO-和-INSERT-INTO-SELECT"><a href="#SELECT-INTO-和-INSERT-INTO-SELECT" class="headerlink" title="SELECT INTO 和 INSERT INTO SELECT"></a>SELECT INTO 和 INSERT INTO SELECT</h1><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Insert是sql中常用语句，<code>Insert INTO table(field1,field2,...) values(value1,value2,…)</code>这种形式的在应用程序开发中必不可少。但我们在开发、测试过程中，经常会遇到需要表复制的情况，如将一个table1的数据的部分字段 </p>
-<p>复制到table2中，或者将整个table1复制到table2中，这时候我们就要使用<code>SELECT INTO</code> 和 <code>INSERT INTO SELECT</code> 表复制语句了。</p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/12/INSERT INTO SELECT 和 SELECT INTO/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JAVA char 类型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/12/JAVA char 类型/">JAVA char 类型</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/12/JAVA char 类型/" class="archive-article-date">
-  	<time datetime="2019-08-12T05:34:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="JAVA-char-类型"><a href="#JAVA-char-类型" class="headerlink" title="JAVA char 类型"></a>JAVA char 类型</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
-<p>《Java核心技术》一书中强烈建议不要在程序中使用char类型，除非需要操作UTF-16代码单元。本文将详细解读其中原理。 </p>
-</blockquote>
-<p>当时看到过，但是一直没有去深究过原因，这里去探索一下其中的缘由。 </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/12/JAVA char 类型/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MySQL 批量插入数据" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/10/MySQL 批量插入数据/">MySQL 批量插入数据</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/10/MySQL 批量插入数据/" class="archive-article-date">
-  	<time datetime="2019-08-10T10:15:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="MySQL-批量插入数据"><a href="#MySQL-批量插入数据" class="headerlink" title="MySQL 批量插入数据"></a>MySQL 批量插入数据</h1><p>这篇主要介绍如何使用MySQL函数和存储过程批量插入数据。当然不是只有这种方法才可以，还有一个思路是使用linux脚本添加，我也在网上查阅了文档，大致思路是连接数据库，然后插入一条数据，批量循环，个人觉得这种方法更大的开销会在连接数据库上。所以在这里不再介绍这种方法，当然最后我会把这两种批量插入对比的结果放在这里，仅供参考。由于我们是使用存储过程和函数实现批量插入的，所以我们这里大概介绍一下。 </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/10/MySQL 批量插入数据/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JAVA 8 Stream 高级篇" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/09/JAVA 8 Stream 高级篇/">JAVA 8 Stream 高级篇</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/09/JAVA 8 Stream 高级篇/" class="archive-article-date">
-  	<time datetime="2019-08-08T16:03:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="JAVA-8-Stream-高级篇"><a href="#JAVA-8-Stream-高级篇" class="headerlink" title="JAVA 8 Stream 高级篇"></a>JAVA 8 Stream 高级篇</h1><p>前文介绍了部分Stream常见接口方法，理解起来并不困难，但Stream的用法不止于此，本节我们将仍然以Stream为例，介绍高级用法。 </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Stream</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/09/JAVA 8 Stream 高级篇/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JAVA 8 Stream 基础篇 " class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/08/JAVA 8 Stream 基础篇 /">JAVA 8 Stream 基础篇</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/08/JAVA 8 Stream 基础篇 /" class="archive-article-date">
-  	<time datetime="2019-08-08T14:57:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="JAVA-8-Stream-基础篇"><a href="#JAVA-8-Stream-基础篇" class="headerlink" title="JAVA 8 Stream 基础篇"></a>JAVA 8 Stream 基础篇</h1><blockquote>
-<p>简介：Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。Stream API可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。这种风格将要处理的元素集合看作一种流， 流在管道中传输， 并且可以在管道的节点上进行处理， 比如筛选， 排序，聚合等。元素流在管道中经过中间操作（intermediate operation）的处理，最后由最终操作(terminal operation)得到前面处理的结果。 </p>
-</blockquote>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Stream</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/08/JAVA 8 Stream 基础篇 /">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-StreamDistinct" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/08/06/StreamDistinct/">JAVA 8 Stream 基础篇之distinct()</a>
-    </h1>
-  
-
-        
-        <a href="/2019/08/06/StreamDistinct/" class="archive-article-date">
-  	<time datetime="2019-08-06T05:47:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="JAVA-8-Stream-基础篇之distinct"><a href="#JAVA-8-Stream-基础篇之distinct" class="headerlink" title="JAVA 8 Stream 基础篇之distinct()"></a>JAVA 8 Stream 基础篇之distinct()</h1><p>基础篇提到要对对象实现 <code>distinct()</code> 的功能，本文就来介绍一下如何实现这个功能。要实现这个功能就需要知道   <code>distinct()</code> 的工作原理。<code>distinct()</code> 是根据 <code>hashCode()</code> 和 <code>equals()</code> 来进行去重的，所以我们首先就要重写该类的这两个方法。 </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Stream</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/08/06/StreamDistinct/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Mybatis 传递复杂实体类 " class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/30/Mybatis 传递复杂实体类 /">Mybatis 传递复杂实体类</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/30/Mybatis 传递复杂实体类 /" class="archive-article-date">
-  	<time datetime="2019-07-30T05:13:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>在项目单表操作中，JPA和mybatis(mybatisPlus,tkmybatis)算是比较典型的代表。主要是单表操作实在是快，除了快，还是快。今天主要介绍一下mybatis在传递比较复杂的对象时应该如何处理。 </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Mybatis</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/30/Mybatis 传递复杂实体类 /">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-MySQL索引的概念" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/28/MySQL索引的概念/">MySQL索引总结</a>
-    </h1>
-  
-
-        
-        <a href="/2019/07/28/MySQL索引的概念/" class="archive-article-date">
-  	<time datetime="2019-07-28T15:30:34.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-07-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>关于MySQL索引的好处，如果正确合理设计并且使用索引的MySQL是一辆兰博基尼的话，那么没有设计和使用索引的MySQL就是一个人力三轮车。对于没有索引的表，单表查询可能几十万数据就是瓶颈，而通常大型网站单日就可能会产生几十万甚至几百万的数据，没有索引查询会变的非常缓慢。 </p>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">MySQL</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2019/07/28/MySQL索引的概念/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
-    </nav>
+  
+
+  
+
+  
+
   
 
 
@@ -943,8 +451,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
